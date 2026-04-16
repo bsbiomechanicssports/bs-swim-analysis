@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BS Biomechanics Sports — Swim Analysis Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   BS SWIM ANALYSIS TRACKER — DESIGN SYSTEM
+═══════════════════════════════════════════ */
+:root {
+  --navy-950: #020912;
+  --navy-900: #050e1f;
+  --navy-800: #0a1628;
+  --navy-700: #0d1f3c;
+  --navy-600: #112347;
+  --navy-500: #1a3a6e;
+  --navy-400: #1a5fad;
+  --cyan-500: #00c8ff;
+  --cyan-400: #00e5ff;
+  --cyan-300: #7df0ff;
+  --cyan-dim: rgba(0,200,255,0.12);
+  --cyan-glow: rgba(0,200,255,0.25);
+  --teal: #00b8a9;
+  --teal-dim: rgba(0,184,169,0.12);
+  --silver: #c8d8e8;
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f0f4f8;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.12);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.12);
+  --purple: #8b5cf6;
+  --purple-dim: rgba(139,92,246,0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+  --shadow-cyan: 0 0 24px rgba(0,200,255,0.2);
+  --r: 8px; --rl: 12px; --rxl: 16px;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:14px;background:var(--gray-50);color:var(--gray-700);min-height:100vh;-webkit-font-smoothing:antialiased}
+input,select,button,textarea{font-family:var(--sans)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:3px}
+
+/* ── Layout ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:268px;flex-shrink:0;background:var(--navy-800);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto}
+.main{flex:1;margin-left:268px;min-width:0}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-200);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.content{padding:20px 24px}
+
+/* ── Sidebar ── */
+.sidebar-header{padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:10px}
+.sidebar-logo{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--cyan-dim)}
+.sidebar-logo-fallback{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--navy-700),var(--navy-400));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--cyan-500);border:2px solid var(--cyan-dim)}
+.sidebar-brand{flex:1;min-width:0}
+.sidebar-brand .name{font-size:11px;font-weight:800;color:var(--white);letter-spacing:.01em;line-height:1.2}
+.sidebar-brand .name span{color:var(--cyan-500)}
+.sidebar-brand .tag{font-size:9px;color:rgba(255,255,255,0.4);font-family:var(--mono);letter-spacing:.08em;margin-top:2px}
+.sidebar-nav{padding:10px 8px;flex:1}
+.nav-section{font-size:9px;font-weight:700;color:rgba(255,255,255,0.25);letter-spacing:.12em;text-transform:uppercase;padding:0 8px;margin:14px 0 4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--r);cursor:pointer;font-size:12px;font-weight:500;color:rgba(255,255,255,0.5);transition:all .15s;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:rgba(255,255,255,0.07);color:var(--white)}
+.nav-item.active{background:var(--cyan-dim);color:var(--cyan-400);font-weight:600}
+.nav-item .ni{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.nav-item .nl{flex:1}
+.nav-badge{font-size:10px;font-family:var(--mono);padding:1px 6px;border-radius:99px;background:var(--cyan-dim);color:var(--cyan-500)}
+.nav-divider{height:1px;background:rgba(255,255,255,0.06);margin:6px 8px}
+.sidebar-user{padding:12px 14px;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:9px}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:var(--navy-500);border:2px solid var(--cyan-dim);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--cyan-400);flex-shrink:0;overflow:hidden;cursor:pointer}
+.user-avatar img{width:100%;height:100%;object-fit:cover}
+.user-info{flex:1;min-width:0}
+.user-info .uname{font-size:11px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-info .urole{font-size:10px;color:rgba(255,255,255,0.35);margin-top:1px}
+.btn-logout{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:15px;padding:4px;border-radius:4px;transition:color .15s}
+.btn-logout:hover{color:var(--red)}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--gray-200);background:var(--white);color:var(--gray-700);transition:all .15s;white-space:nowrap;text-decoration:none}
+.btn:hover{background:var(--gray-100)}
+.btn-primary{background:var(--navy-700);border-color:var(--navy-700);color:var(--white)}
+.btn-primary:hover{background:var(--navy-600)}
+.btn-cyan{background:var(--cyan-500);border-color:var(--cyan-500);color:var(--navy-900);font-weight:700}
+.btn-cyan:hover{background:var(--cyan-400)}
+.btn-teal{background:var(--teal);border-color:var(--teal);color:var(--white);font-weight:600}
+.btn-teal:hover{filter:brightness(1.1)}
+.btn-danger{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+.btn-danger:hover{background:rgba(239,68,68,.2)}
+.btn-amber{background:var(--amber-dim);border-color:var(--amber);color:var(--amber)}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--gray-500)}
+.btn-ghost:hover{background:var(--gray-100);color:var(--gray-700)}
+.btn-sm{padding:4px 10px;font-size:11px}
+.btn-lg{padding:10px 20px;font-size:13px;font-weight:600}
+.btn-icon{padding:6px;width:30px;height:30px;justify-content:center}
+
+/* ── Cards ── */
+.card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--rl);box-shadow:var(--shadow-sm);overflow:hidden}
+.card-header{padding:12px 16px;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.card-header h2{font-size:13px;font-weight:600;color:var(--gray-700)}
+.card-body{padding:16px}
+
+/* ── Metric Cards ── */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.metric-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--rl);padding:14px 16px;box-shadow:var(--shadow-sm)}
+.metric-card.c-cyan{border-left:3px solid var(--cyan-500)}
+.metric-card.c-teal{border-left:3px solid var(--teal)}
+.metric-card.c-green{border-left:3px solid var(--green)}
+.metric-card.c-amber{border-left:3px solid var(--amber)}
+.metric-card.c-purple{border-left:3px solid var(--purple)}
+.metric-card.c-red{border-left:3px solid var(--red)}
+.m-label{font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
+.m-value{font-size:26px;font-weight:700;color:var(--navy-700);font-family:var(--mono);margin-top:4px;line-height:1}
+.m-value.cyan{color:var(--cyan-500)}
+.m-value.teal{color:var(--teal)}
+.m-value.green{color:var(--green)}
+.m-value.amber{color:var(--amber)}
+.m-sub{font-size:10px;color:var(--gray-400);margin-top:4px}
+
+/* ── Tables ── */
+.table-wrap{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--rl);overflow:hidden;box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:9px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--gray-400);letter-spacing:.07em;text-transform:uppercase;font-family:var(--mono);background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
+tbody td{padding:11px 14px;font-size:12px;border-bottom:1px solid var(--gray-100);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--gray-50)}
+.tr-click{cursor:pointer}
+
+/* ── Badges ── */
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:500;font-family:var(--mono)}
+.pill-cyan{background:var(--cyan-dim);color:var(--cyan-500)}
+.pill-teal{background:var(--teal-dim);color:var(--teal)}
+.pill-green{background:var(--green-dim);color:var(--green)}
+.pill-amber{background:var(--amber-dim);color:var(--amber)}
+.pill-red{background:var(--red-dim);color:var(--red)}
+.pill-purple{background:var(--purple-dim);color:var(--purple)}
+.pill-gray{background:var(--gray-100);color:var(--gray-500)}
+.role-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.04em}
+.role-super{background:var(--purple-dim);color:var(--purple)}
+.role-coach{background:var(--teal-dim);color:var(--teal)}
+
+/* ── Forms ── */
+.form-grid{display:grid;gap:12px}
+.fg-2{grid-template-columns:1fr 1fr}
+.fg-3{grid-template-columns:1fr 1fr 1fr}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group.span2{grid-column:1/-1}
+.form-label{font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:.03em}
+.form-input,.form-select,.form-textarea{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--r);color:var(--gray-700);padding:8px 11px;font-size:12px;outline:none;transition:border .15s,box-shadow .15s;width:100%}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--cyan-500);box-shadow:0 0 0 3px var(--cyan-dim)}
+.form-textarea{resize:vertical;min-height:80px}
+.form-hint{font-size:10px;color:var(--gray-400);margin-top:2px}
+
+/* ── Modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(5,14,31,0.65);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;backdrop-filter:blur(4px)}
+.modal{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--rxl);padding:24px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:mIn .2s ease}
+.modal-sm{max-width:380px}
+.modal-lg{max-width:640px}
+.modal-xl{max-width:800px}
+@keyframes mIn{from{opacity:0;transform:translateY(-12px) scale(.97)}to{opacity:1;transform:none}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.modal-header h3{font-size:15px;font-weight:700;color:var(--navy-700)}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:18px;padding:2px;border-radius:4px}
+.modal-close:hover{color:var(--gray-700);background:var(--gray-100)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-100)}
+.hidden{display:none!important}
+
+/* ── Tabs ── */
+.tabs{display:flex;border-bottom:1px solid var(--gray-200);margin-bottom:16px;gap:0;flex-wrap:wrap}
+.tab-btn{padding:9px 18px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--gray-400);border-bottom:2px solid transparent;transition:all .15s;margin-bottom:-1px}
+.tab-btn:hover{color:var(--gray-700)}
+.tab-btn.active{color:var(--navy-700);border-bottom-color:var(--cyan-500);font-weight:600}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ── Notification ── */
+.notif{position:fixed;bottom:20px;right:20px;background:var(--navy-800);color:var(--white);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);padding:10px 16px;font-size:12px;z-index:9999;opacity:0;transition:opacity .2s;pointer-events:none;max-width:300px;box-shadow:var(--shadow-lg)}
+.notif.show{opacity:1}
+.notif.success{border-left:3px solid var(--green)}
+.notif.error{border-left:3px solid var(--red)}
+.notif.info{border-left:3px solid var(--cyan-500)}
+
+/* ── Empty ── */
+.empty{text-align:center;padding:40px 20px;color:var(--gray-400)}
+.empty-icon{font-size:36px;margin-bottom:10px;opacity:.6}
+.empty p{font-size:13px}
+
+/* ── Login ── */
+.login-page{min-height:100vh;background:linear-gradient(135deg,var(--navy-950) 0%,var(--navy-700) 60%,var(--navy-500) 100%);display:flex;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden}
+.login-page::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 65% 35%,rgba(0,200,255,0.07) 0%,transparent 60%),radial-gradient(ellipse at 20% 75%,rgba(26,95,173,0.15) 0%,transparent 50%)}
+.login-card{background:rgba(255,255,255,0.97);border-radius:var(--rxl);padding:40px 36px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.4);position:relative;z-index:1;animation:mIn .3s ease}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo-img{width:88px;height:88px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;box-shadow:var(--shadow-cyan)}
+.login-logo-fallback{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--navy-800),var(--navy-400));margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--cyan-500);box-shadow:var(--shadow-cyan)}
+.login-brand{font-size:14px;font-weight:800;color:var(--navy-700);margin-top:12px;letter-spacing:.01em}
+.login-brand span{color:var(--cyan-500)}
+.login-tag{font-size:10px;color:var(--gray-400);letter-spacing:.1em;text-transform:uppercase;margin-top:3px;font-family:var(--mono)}
+.login-title{font-size:22px;font-weight:700;color:var(--navy-700);margin-bottom:6px}
+.login-sub{font-size:12px;color:var(--gray-400);margin-bottom:24px}
+.login-btn{width:100%;padding:12px;border-radius:var(--r);background:linear-gradient(135deg,var(--navy-700),var(--navy-500));color:var(--white);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(10,22,40,0.25);letter-spacing:.02em}
+.login-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(10,22,40,0.35)}
+.login-btn:disabled{opacity:.6;transform:none;cursor:not-allowed}
+.login-error{background:var(--red-dim);border:1px solid var(--red);border-radius:var(--r);padding:9px 12px;font-size:12px;color:var(--red);margin-bottom:14px;display:none}
+.login-error.show{display:block}
+
+/* ── Profile ── */
+.profile-cover{height:80px;background:linear-gradient(135deg,var(--navy-800),var(--navy-500),var(--cyan-500))}
+.profile-av{width:64px;height:64px;border-radius:50%;border:3px solid var(--white);background:var(--navy-500);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--cyan-400);margin-top:-32px;margin-left:16px;box-shadow:var(--shadow-md);overflow:hidden;cursor:pointer;position:relative}
+.profile-av:hover .av-overlay{opacity:1}
+.av-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;border-radius:50%;font-size:18px}
+.profile-av img{width:100%;height:100%;object-fit:cover}
+
+/* ── Module cards ── */
+.module-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.module-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--rxl);padding:20px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow-sm)}
+.module-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--cyan-500)}
+.module-card.active-mod{border-color:var(--cyan-500);background:linear-gradient(135deg,rgba(0,200,255,0.04),var(--white))}
+.module-icon{font-size:32px;margin-bottom:10px}
+.module-name{font-size:13px;font-weight:700;color:var(--navy-700);margin-bottom:4px}
+.module-desc{font-size:11px;color:var(--gray-400);line-height:1.4}
+.module-count{font-size:10px;font-family:var(--mono);color:var(--cyan-500);margin-top:8px;font-weight:600}
+
+/* ── Upload zone ── */
+.upload-zone{border:2px dashed var(--gray-300);border-radius:var(--rl);padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:var(--gray-50)}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--cyan-500);background:var(--cyan-dim)}
+.upload-zone .uz-icon{font-size:36px;margin-bottom:10px;opacity:.6}
+.upload-zone .uz-text{font-size:13px;font-weight:500;color:var(--gray-600)}
+.upload-zone .uz-sub{font-size:11px;color:var(--gray-400);margin-top:4px}
+
+/* ── Analysis session card ── */
+.session-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--rl);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
+.session-card:hover{border-color:var(--cyan-500);box-shadow:var(--shadow-md)}
+.session-info .s-title{font-size:13px;font-weight:600;color:var(--navy-700)}
+.session-info .s-meta{font-size:11px;color:var(--gray-400);margin-top:3px;font-family:var(--mono)}
+.session-actions{display:flex;gap:6px;flex-shrink:0}
+
+/* ── Topbar ── */
+.topbar-title{font-size:14px;font-weight:600;color:var(--navy-700)}
+.topbar-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar-right{display:flex;gap:6px;flex-wrap:wrap}
+.breadcrumb{font-size:11px;color:var(--gray-400);display:flex;align-items:center;gap:4px}
+.breadcrumb span{color:var(--gray-600)}
+
+/* ── Utility ── */
+.text-mono{font-family:var(--mono)}
+.text-muted{color:var(--gray-400)}
+.text-sm{font-size:11px}
+.text-xs{font-size:10px}
+.text-navy{color:var(--navy-700)}
+.text-cyan{color:var(--cyan-500)}
+.flex{display:flex}
+.items-center{align-items:center}
+.justify-between{justify-content:space-between}
+.gap-2{gap:8px}
+.gap-3{gap:12px}
+.mb-2{margin-bottom:8px}
+.mb-3{margin-bottom:12px}
+.mb-4{margin-bottom:16px}
+.fw-bold{font-weight:700}
+.divider{height:1px;background:var(--gray-100);margin:12px 0}
+</style>
+</head>
+<body>
+
+<!-- ═══════ LOGIN ═══════ -->
+<div id="page-login" class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="logo.png" alt="BS" class="login-logo-img" onerror="this.style.display='none';document.getElementById('ll-fb').style.display='flex'">
+      <div class="login-logo-fallback" id="ll-fb" style="display:none">BS</div>
+      <div class="login-brand">BS <span>BIOMECHANICS</span> SPORTS</div>
+      <div class="login-tag">Swim Analysis Tracker</div>
+    </div>
+    <div class="login-error" id="login-error"></div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">E-posta</label><input type="email" class="form-input" id="login-email" placeholder="ad@email.com" autocomplete="email"></div>
+      <div class="form-group"><label class="form-label">Şifre</label><input type="password" class="form-input" id="login-pw" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    </div>
+    <div style="margin-top:18px"><button class="login-btn" onclick="doLogin()" id="login-btn">Giriş Yap</button></div>
+    <p style="text-align:center;font-size:11px;color:var(--gray-400);margin-top:14px">Hesap oluşturma yalnızca Süper Admin tarafından yapılır.</p>
+  </div>
+</div>
+
+<!-- ═══════ APP ═══════ -->
+<div id="page-app" class="app hidden">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="logo.png" alt="BS" class="sidebar-logo" onerror="this.style.display='none';document.getElementById('sb-logo-fb').style.display='flex'">
+      <div class="sidebar-logo-fallback" id="sb-logo-fb" style="display:none">BS</div>
+      <div class="sidebar-brand">
+        <div class="name">BS <span>BIOMECHANICS</span></div>
+        <div class="tag">Swim Analysis Tracker</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sb-avatar" onclick="showView('profile')"></div>
+      <div class="user-info">
+        <div class="uname" id="sb-name">—</div>
+        <div class="urole" id="sb-role">—</div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()" title="Çıkış">⏻</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="hidden">
+      <div class="topbar">
+        <div class="topbar-left"><span class="topbar-title">📊 Genel Bakış</span></div>
+      </div>
+      <div class="content" id="dashboard-content"></div>
+    </div>
+
+    <!-- CLUBS -->
+    <div id="view-clubs" class="hidden">
+      <div class="topbar">
+        <div class="topbar-left"><span class="topbar-title">🏊 Kulüp Yönetimi</span></div>
+        <div class="topbar-right"><button class="btn btn-primary btn-sm" onclick="openClubModal()">+ Yeni Kulüp</button></div>
+      </div>
+      <div class="content" id="clubs-content"></div>
+    </div>
+
+    <!-- COACHES -->
+    <div id="view-coaches" class="hidden">
+      <div class="topbar">
+        <div class="topbar-left"><span class="topbar-title">👤 Antrenör Yönetimi</span></div>
+        <div class="topbar-right"><button class="btn btn-primary btn-sm" onclick="openCoachModal()">+ Yeni Antrenör</button></div>
+      </div>
+      <div class="content" id="coaches-content"></div>
+    </div>
+
+    <!-- ATHLETES -->
+    <div id="view-athletes" class="hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-title">🏅 Sporcular</span>
+          <select class="form-select" style="width:160px;padding:5px 8px;font-size:11px" id="ath-filter-club" onchange="renderAthletes()">
+            <option value="">Tüm Kulüpler</option>
+          </select>
+        </div>
+        <div class="topbar-right"><button class="btn btn-primary btn-sm" onclick="openAthleteModal()">+ Yeni Sporcu</button></div>
+      </div>
+      <div class="content" id="athletes-content"></div>
+    </div>
+
+    <!-- ATHLETE DETAIL -->
+    <div id="view-athlete-detail" class="hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="btn btn-ghost btn-sm" onclick="showView('athletes')">← Geri</button>
+          <span class="topbar-title" id="ath-detail-title">—</span>
+        </div>
+        <div class="topbar-right" id="ath-detail-actions"></div>
+      </div>
+      <div class="content" id="ath-detail-content"></div>
+    </div>
+
+    <!-- ANALYSIS (SwimBetter, VelocityMeter, Video, Race) -->
+    <div id="view-analysis" class="hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="btn btn-ghost btn-sm" id="analysis-back-btn">← Geri</button>
+          <span class="topbar-title" id="analysis-title">Analiz</span>
+        </div>
+        <div class="topbar-right" id="analysis-actions"></div>
+      </div>
+      <div class="content" id="analysis-content"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="view-profile" class="hidden">
+      <div class="topbar">
+        <div class="topbar-left"><span class="topbar-title">👤 Profilim</span></div>
+      </div>
+      <div class="content" id="profile-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MODALS ═══════ -->
+
+<!-- Club Modal -->
+<div class="modal-overlay hidden" id="modal-club" onclick="bgClose('modal-club',event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="club-modal-title">Kulüp Ekle</h3>
+      <button class="modal-close" onclick="closeModal('modal-club')">✕</button>
+    </div>
+    <input type="hidden" id="club-edit-id">
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Kulüp Adı *</label><input class="form-input" id="club-name" placeholder="Galatasaray Yüzme"></div>
+      <div class="form-group"><label class="form-label">Şehir</label><input class="form-input" id="club-city" placeholder="İstanbul"></div>
+      <div class="form-group"><label class="form-label">Ülke</label><input class="form-input" id="club-country" placeholder="Türkiye"></div>
+      <div class="form-group"><label class="form-label">Notlar</label><textarea class="form-textarea" id="club-notes" rows="2" placeholder="opsiyonel"></textarea></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modal-club')">İptal</button>
+      <button class="btn btn-primary" onclick="saveClub()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- Coach Modal -->
+<div class="modal-overlay hidden" id="modal-coach" onclick="bgClose('modal-coach',event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="coach-modal-title">Antrenör Ekle</h3>
+      <button class="modal-close" onclick="closeModal('modal-coach')">✕</button>
+    </div>
+    <input type="hidden" id="coach-edit-id">
+    <div class="form-grid fg-2">
+      <div class="form-group span2"><label class="form-label">Ad Soyad *</label><input class="form-input" id="coach-name" placeholder="Ahmet Yılmaz"></div>
+      <div class="form-group span2"><label class="form-label">E-posta *</label><input class="form-input" type="email" id="coach-email" placeholder="ahmet@email.com"></div>
+      <div class="form-group" id="coach-pw-group"><label class="form-label">Şifre *</label><input class="form-input" type="password" id="coach-pw" placeholder="En az 8 karakter"></div>
+      <div class="form-group"><label class="form-label">Unvan</label><input class="form-input" id="coach-title" placeholder="Baş Antrenör"></div>
+      <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" id="coach-phone" placeholder="0532 xxx xx xx"></div>
+      <div class="form-group"><label class="form-label">Kulüp</label>
+        <select class="form-select" id="coach-club">
+          <option value="">— Kulüp seçin —</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modal-coach')">İptal</button>
+      <button class="btn btn-primary" onclick="saveCoach()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- Athlete Modal -->
+<div class="modal-overlay hidden" id="modal-athlete" onclick="bgClose('modal-athlete',event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="athlete-modal-title">Sporcu Ekle</h3>
+      <button class="modal-close" onclick="closeModal('modal-athlete')">✕</button>
+    </div>
+    <input type="hidden" id="ath-edit-id">
+    <div class="form-grid fg-2">
+      <div class="form-group span2"><label class="form-label">Ad Soyad *</label><input class="form-input" id="ath-name" placeholder="Zeynep Kaya"></div>
+      <div class="form-group"><label class="form-label">Doğum Yılı</label><input class="form-input" id="ath-year" type="number" placeholder="2006" min="1950" max="2030"></div>
+      <div class="form-group"><label class="form-label">Cinsiyet</label>
+        <select class="form-select" id="ath-gender"><option value="K">Kadın</option><option value="E">Erkek</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Kulüp *</label>
+        <select class="form-select" id="ath-club" onchange="updateCoachSelect()"></select>
+      </div>
+      <div class="form-group"><label class="form-label">Antrenör</label>
+        <select class="form-select" id="ath-coach"><option value="">— Antrenör seçin —</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Ana Branş (opsiyonel)</label>
+        <select class="form-select" id="ath-stroke">
+          <option value="">— Seçin —</option>
+          <option>Serbest</option><option>Kelebek</option><option>Sırtüstü</option><option>Kurbağalama</option><option>Karışık</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Ülke</label><input class="form-input" id="ath-country" placeholder="Türkiye"></div>
+      <div class="form-group span2"><label class="form-label" style="color:var(--gray-400);font-size:10px">💡 Branş ve mesafe her analiz seansında ayrıca seçilir. Bu alan sadece genel bilgi içindir.</label></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modal-athlete')">İptal</button>
+      <button class="btn btn-primary" onclick="saveAthlete()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay hidden" id="modal-confirm" onclick="bgClose('modal-confirm',event)">
+  <div class="modal modal-sm" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Silme Onayı</h3>
+      <button class="modal-close" onclick="closeModal('modal-confirm')">✕</button>
+    </div>
+    <p id="confirm-text" style="font-size:13px;color:var(--gray-600);line-height:1.5"></p>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modal-confirm')">İptal</button>
+      <button class="btn btn-danger" id="confirm-ok-btn">Sil</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, serverTimestamp, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDW05O3pjF_FjcMAzcMKUCtyq4PbiJBUdc",
+  authDomain: "bs-swim-analysis.firebaseapp.com",
+  projectId: "bs-swim-analysis",
+  storageBucket: "bs-swim-analysis.firebasestorage.app",
+  messagingSenderId: "990059091852",
+  appId: "1:990059091852:web:83094b9437ef53fcd068a9"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window._fb = { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged,
+  createUserWithEmailAndPassword, doc, setDoc, getDoc, getDocs, addDoc, updateDoc,
+  deleteDoc, collection, query, where, orderBy, serverTimestamp, writeBatch };
+
+window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+<script>
+// ════════════════════════════════════════════════════════
+// BS SWIM ANALYSIS TRACKER — APP ENGINE v1.0
+// ════════════════════════════════════════════════════════
+
+// ── State ────────────────────────────────────────────────
+let currentUser = null;
+let currentProfile = null;
+let currentView = '';
+let currentAthleteId = null;
+let currentAnalysisModule = null;
+let cache = { clubs:{}, coaches:{}, athletes:{}, sessions:{} };
+
+// ── Firebase ready ────────────────────────────────────────
+window.addEventListener('firebase-ready', () => {
+  const { auth, onAuthStateChanged } = window._fb;
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+      await loadProfile(user.uid);
+      await loadAllData();
+      showApp();
+    } else {
+      currentUser = null;
+      currentProfile = null;
+      showLogin();
+    }
+  });
+});
+
+// ── Auth ──────────────────────────────────────────────────
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pw    = document.getElementById('login-pw').value;
+  const btn   = document.getElementById('login-btn');
+  const err   = document.getElementById('login-error');
+  err.classList.remove('show');
+  if (!email || !pw) { showLoginErr('E-posta ve şifre gerekli.'); return; }
+  btn.textContent = 'Giriş yapılıyor...'; btn.disabled = true;
+  try {
+    await window._fb.signInWithEmailAndPassword(window._fb.auth, email, pw);
+  } catch(e) {
+    btn.textContent = 'Giriş Yap'; btn.disabled = false;
+    showLoginErr('E-posta veya şifre hatalı.');
+  }
+}
+function showLoginErr(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg; el.classList.add('show');
+}
+async function doLogout() {
+  await window._fb.signOut(window._fb.auth);
+}
+function showLogin() {
+  document.getElementById('page-login').classList.remove('hidden');
+  document.getElementById('page-app').classList.add('hidden');
+  document.getElementById('login-btn').textContent = 'Giriş Yap';
+  document.getElementById('login-btn').disabled = false;
+}
+function showApp() {
+  document.getElementById('page-login').classList.add('hidden');
+  document.getElementById('page-app').classList.remove('hidden');
+  buildSidebar();
+  showView('dashboard');
+}
+
+// ── Profile ───────────────────────────────────────────────
+async function loadProfile(uid) {
+  const { db, doc, getDoc, setDoc, serverTimestamp } = window._fb;
+  const snap = await getDoc(doc(db, 'users', uid));
+  if (snap.exists()) {
+    currentProfile = { id: snap.id, ...snap.data() };
+  } else {
+    currentProfile = { id: uid, name: 'Süper Admin', role: 'superadmin', email: currentUser.email };
+    await setDoc(doc(db, 'users', uid), { ...currentProfile, createdAt: serverTimestamp() }, { merge: true });
+  }
+  document.getElementById('sb-name').textContent = currentProfile.name || '—';
+  document.getElementById('sb-role').textContent = roleLabel(currentProfile.role);
+  const av = document.getElementById('sb-avatar');
+  if (currentProfile.photoURL) {
+    av.innerHTML = `<img src="${currentProfile.photoURL}" alt="">`;
+  } else {
+    av.textContent = initials(currentProfile.name || '?');
+  }
+}
+
+// ── Load all data ─────────────────────────────────────────
+async function loadAllData() {
+  const { db, getDocs, collection } = window._fb;
+  const [clubsSnap, coachesSnap, athletesSnap] = await Promise.all([
+    getDocs(collection(db, 'clubs')),
+    getDocs(collection(db, 'coaches')),
+    getDocs(collection(db, 'athletes')),
+  ]);
+  cache.clubs = {};
+  clubsSnap.forEach(d => { cache.clubs[d.id] = { id: d.id, ...d.data() }; });
+  cache.coaches = {};
+  coachesSnap.forEach(d => { cache.coaches[d.id] = { id: d.id, ...d.data() }; });
+  cache.athletes = {};
+  athletesSnap.forEach(d => { cache.athletes[d.id] = { id: d.id, ...d.data() }; });
+}
+
+// ── Helpers ───────────────────────────────────────────────
+function initials(name) { return (name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function roleLabel(role) { return role==='superadmin'?'Süper Admin':role==='coach'?'Antrenör':'—'; }
+function isSuperAdmin() { return currentProfile?.role === 'superadmin'; }
+function notify(msg, type='info') {
+  const el = document.getElementById('notif');
+  el.textContent = msg; el.className = `notif ${type} show`;
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+function bgClose(id, e) { if(e.target === document.getElementById(id)) closeModal(id); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+// ── Sidebar ───────────────────────────────────────────────
+function buildSidebar() {
+  const nav = document.getElementById('sidebar-nav');
+  let html = '';
+  html += `<div class="nav-section">Genel</div>`;
+  html += ni('dashboard','📊','Genel Bakış');
+  if (isSuperAdmin()) {
+    html += `<div class="nav-section">Yönetim</div>`;
+    html += ni('clubs','🏊','Kulüpler', Object.keys(cache.clubs).length);
+    html += ni('coaches','👤','Antrenörler', Object.keys(cache.coaches).length);
+    html += ni('athletes','🏅','Sporcular', Object.keys(cache.athletes).length);
+  } else {
+    // Coach sees their athletes
+    const myAthletes = Object.values(cache.athletes).filter(a=>a.coachId===currentProfile.id);
+    html += `<div class="nav-section">Sporcularım</div>`;
+    myAthletes.sort((a,b)=>(a.name||'').localeCompare(b.name||'','tr')).forEach(ath => {
+      html += `<button class="nav-item ${currentAthleteId===ath.id&&currentView==='athlete-detail'?'active':''}" onclick="showAthleteDetail('${ath.id}')">
+        <span class="ni">🏅</span><span class="nl">${ath.name}</span>
+      </button>`;
+    });
+  }
+  html += `<div class="nav-divider"></div>`;
+  html += ni('profile','👤','Profilim');
+  nav.innerHTML = html;
+}
+function ni(view, icon, label, count) {
+  const badge = count !== undefined ? `<span class="nav-badge">${count}</span>` : '';
+  return `<button class="nav-item ${currentView===view?'active':''}" onclick="showView('${view}')">
+    <span class="ni">${icon}</span><span class="nl">${label}</span>${badge}
+  </button>`;
+}
+
+// ── View router ───────────────────────────────────────────
+function showView(view) {
+  currentView = view;
+  const all = ['dashboard','clubs','coaches','athletes','athlete-detail','analysis','profile'];
+  all.forEach(v => document.getElementById('view-'+v)?.classList.add('hidden'));
+  document.getElementById('view-'+view)?.classList.remove('hidden');
+  buildSidebar();
+  if (view==='dashboard') renderDashboard();
+  else if (view==='clubs') renderClubs();
+  else if (view==='coaches') renderCoaches();
+  else if (view==='athletes') renderAthletes();
+  else if (view==='profile') renderProfile();
+}
+function showAthleteDetail(athleteId) {
+  currentAthleteId = athleteId;
+  currentView = 'athlete-detail';
+  const all = ['dashboard','clubs','coaches','athletes','athlete-detail','analysis','profile'];
+  all.forEach(v => document.getElementById('view-'+v)?.classList.add('hidden'));
+  document.getElementById('view-athlete-detail').classList.remove('hidden');
+  buildSidebar();
+  renderAthleteDetail(athleteId);
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────
+function renderDashboard() {
+  const clubs = Object.values(cache.clubs).length;
+  const coaches = Object.values(cache.coaches).length;
+  const athletes = Object.values(cache.athletes).length;
+  let html = '';
+  // Welcome
+  html += `<div style="margin-bottom:20px">
+    <h1 style="font-size:20px;font-weight:800;color:var(--navy-700)">Hoşgeldiniz, ${currentProfile?.name?.split(' ')[0]||''}! 👋</h1>
+    <p style="font-size:12px;color:var(--gray-400);margin-top:4px">BS Biomechanics Sports Swim Analysis Tracker</p>
+  </div>`;
+
+  if (isSuperAdmin()) {
+    html += `<div class="metric-grid">
+      <div class="metric-card c-cyan"><div class="m-label">Kulüpler</div><div class="m-value cyan">${clubs}</div></div>
+      <div class="metric-card c-teal"><div class="m-label">Antrenörler</div><div class="m-value teal">${coaches}</div></div>
+      <div class="metric-card c-green"><div class="m-label">Sporcular</div><div class="m-value green">${athletes}</div></div>
+      <div class="metric-card c-purple"><div class="m-label">Analizler</div><div class="m-value" style="color:var(--purple)">—</div><div class="m-sub">yakında</div></div>
+    </div>`;
+
+    // Recent athletes
+    const recentAthletes = Object.values(cache.athletes).slice(-6);
+    if (recentAthletes.length) {
+      html += `<div class="table-wrap">
+        <div class="card-header"><h2>Son Eklenen Sporcular</h2><button class="btn btn-ghost btn-sm" onclick="showView('athletes')">Tümünü Gör →</button></div>
+        <table><thead><tr><th>Sporcu</th><th>Kulüp</th><th>Antrenör</th><th>Branş</th></tr></thead><tbody>`;
+      recentAthletes.forEach(ath => {
+        const club = cache.clubs[ath.clubId];
+        const coach = cache.coaches[ath.coachId];
+        html += `<tr class="tr-click" onclick="showAthleteDetail('${ath.id}')">
+          <td style="font-weight:600;color:var(--navy-400)">${ath.name}</td>
+          <td class="text-muted text-sm">${club?.name||'—'}</td>
+          <td class="text-muted text-sm">${coach?.name||'—'}</td>
+          <td><span class="pill pill-cyan">${ath.stroke||'—'}</span></td>
+        </tr>`;
+      });
+      html += `</tbody></table></div>`;
+    } else {
+      html += `<div class="card"><div class="card-body"><div class="empty">
+        <div class="empty-icon">🏊</div>
+        <p>Henüz sporcu eklenmedi.</p>
+        <div style="margin-top:12px"><button class="btn btn-primary" onclick="showView('athletes')">Sporcu Ekle</button></div>
+      </div></div></div>`;
+    }
+  } else {
+    // Coach dashboard
+    const myAthletes = Object.values(cache.athletes).filter(a=>a.coachId===currentProfile.id);
+    html += `<div class="metric-grid">
+      <div class="metric-card c-cyan"><div class="m-label">Sporcularım</div><div class="m-value cyan">${myAthletes.length}</div></div>
+      <div class="metric-card c-teal"><div class="m-label">Analizler</div><div class="m-value teal">—</div><div class="m-sub">yakında</div></div>
+    </div>`;
+    if (myAthletes.length) {
+      html += `<div class="module-grid">`;
+      myAthletes.sort((a,b)=>a.name.localeCompare(b.name,'tr')).forEach(ath => {
+        const club = cache.clubs[ath.clubId];
+        html += `<div class="module-card" onclick="showAthleteDetail('${ath.id}')">
+          <div class="module-icon">🏅</div>
+          <div class="module-name">${ath.name}</div>
+          <div class="module-desc">${club?.name||'—'} · ${ath.year||'—'} · ${ath.gender==='K'?'Kadın':'Erkek'}</div>
+          <div class="module-count">${ath.stroke||'—'}</div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+  }
+  document.getElementById('dashboard-content').innerHTML = html;
+}
+
+// ── CLUBS ─────────────────────────────────────────────────
+function renderClubs() {
+  const clubs = Object.values(cache.clubs).sort((a,b)=>(a.name||'').localeCompare(b.name||'','tr'));
+  let html = `<div class="table-wrap"><table><thead><tr><th>Kulüp Adı</th><th>Şehir</th><th>Antrenör</th><th>Sporcu</th><th></th></tr></thead><tbody>`;
+  clubs.forEach(c => {
+    const coachCount = Object.values(cache.coaches).filter(co=>co.clubId===c.id).length;
+    const athCount = Object.values(cache.athletes).filter(a=>a.clubId===c.id).length;
+    html += `<tr>
+      <td style="font-weight:600">${c.name}</td>
+      <td class="text-muted text-sm">${c.city||'—'}${c.country?', '+c.country:''}</td>
+      <td class="text-mono text-sm">${coachCount}</td>
+      <td class="text-mono text-sm">${athCount}</td>
+      <td><div style="display:flex;gap:4px">
+        <button class="btn btn-sm btn-ghost" onclick="openClubModal('${c.id}')">✏️</button>
+        <button class="btn btn-sm btn-danger" onclick="confirmDelete('Kulüp silinecek: ${c.name}',()=>deleteClub('${c.id}'))">Sil</button>
+      </div></td>
+    </tr>`;
+  });
+  if (!clubs.length) html += `<tr><td colspan="5"><div class="empty"><div class="empty-icon">🏊</div><p>Henüz kulüp yok.</p></div></td></tr>`;
+  html += `</tbody></table></div>`;
+  document.getElementById('clubs-content').innerHTML = html;
+}
+function openClubModal(editId) {
+  document.getElementById('club-modal-title').textContent = editId ? 'Kulübü Düzenle' : 'Kulüp Ekle';
+  document.getElementById('club-edit-id').value = editId || '';
+  if (editId) {
+    const c = cache.clubs[editId];
+    document.getElementById('club-name').value = c.name||'';
+    document.getElementById('club-city').value = c.city||'';
+    document.getElementById('club-country').value = c.country||'';
+    document.getElementById('club-notes').value = c.notes||'';
+  } else {
+    ['club-name','club-city','club-country','club-notes'].forEach(id=>document.getElementById(id).value='');
+  }
+  openModal('modal-club');
+}
+async function saveClub() {
+  const editId = document.getElementById('club-edit-id').value;
+  const name   = document.getElementById('club-name').value.trim();
+  const city   = document.getElementById('club-city').value.trim();
+  const country= document.getElementById('club-country').value.trim();
+  const notes  = document.getElementById('club-notes').value.trim();
+  if (!name) { notify('Kulüp adı zorunlu!', 'error'); return; }
+  const { db, doc, setDoc, addDoc, collection, serverTimestamp } = window._fb;
+  if (editId) {
+    await setDoc(doc(db,'clubs',editId), {name,city,country,notes,updatedAt:serverTimestamp()}, {merge:true});
+    cache.clubs[editId] = {...cache.clubs[editId], name,city,country,notes};
+    notify('Kulüp güncellendi ✓', 'success');
+  } else {
+    const ref = await addDoc(collection(db,'clubs'), {name,city,country,notes,createdAt:serverTimestamp()});
+    cache.clubs[ref.id] = {id:ref.id, name,city,country,notes};
+    notify('Kulüp eklendi ✓', 'success');
+  }
+  closeModal('modal-club'); renderClubs(); buildSidebar();
+}
+async function deleteClub(id) {
+  const { db, doc, deleteDoc } = window._fb;
+  await deleteDoc(doc(db,'clubs',id));
+  delete cache.clubs[id];
+  notify('Kulüp silindi', 'info'); renderClubs(); buildSidebar();
+}
+
+// ── COACHES ───────────────────────────────────────────────
+function renderCoaches() {
+  const coaches = Object.values(cache.coaches).sort((a,b)=>(a.name||'').localeCompare(b.name||'','tr'));
+  let html = `<div class="table-wrap"><table><thead><tr><th>Ad Soyad</th><th>E-posta</th><th>Kulüp</th><th>Unvan</th><th>Sporcular</th><th></th></tr></thead><tbody>`;
+  coaches.forEach(c => {
+    const club = cache.clubs[c.clubId];
+    const athCount = Object.values(cache.athletes).filter(a=>a.coachId===c.id).length;
+    html += `<tr>
+      <td style="font-weight:600">${c.name}</td>
+      <td class="text-muted text-sm">${c.email||'—'}</td>
+      <td class="text-sm">${club?.name||'—'}</td>
+      <td class="text-muted text-sm">${c.title||'—'}</td>
+      <td class="text-mono text-sm">${athCount}</td>
+      <td><div style="display:flex;gap:4px">
+        <button class="btn btn-sm btn-ghost" onclick="openCoachModal('${c.id}')">✏️</button>
+        <button class="btn btn-sm btn-danger" onclick="confirmDelete('Antrenör silinecek: ${c.name}',()=>deleteCoach('${c.id}'))">Sil</button>
+      </div></td>
+    </tr>`;
+  });
+  if (!coaches.length) html += `<tr><td colspan="6"><div class="empty"><div class="empty-icon">👤</div><p>Henüz antrenör yok.</p></div></td></tr>`;
+  html += `</tbody></table></div>`;
+  document.getElementById('coaches-content').innerHTML = html;
+}
+function openCoachModal(editId) {
+  document.getElementById('coach-modal-title').textContent = editId ? 'Antrenörü Düzenle' : 'Antrenör Ekle';
+  document.getElementById('coach-edit-id').value = editId || '';
+  document.getElementById('coach-pw-group').style.display = editId ? 'none' : '';
+  // Fill club dropdown
+  const clubSel = document.getElementById('coach-club');
+  clubSel.innerHTML = '<option value="">— Kulüp seçin —</option>' +
+    Object.values(cache.clubs).sort((a,b)=>a.name.localeCompare(b.name,'tr')).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  if (editId) {
+    const c = cache.coaches[editId];
+    document.getElementById('coach-name').value = c.name||'';
+    document.getElementById('coach-email').value = c.email||'';
+    document.getElementById('coach-title').value = c.title||'';
+    document.getElementById('coach-phone').value = c.phone||'';
+    document.getElementById('coach-club').value = c.clubId||'';
+  } else {
+    ['coach-name','coach-email','coach-pw','coach-title','coach-phone'].forEach(id=>document.getElementById(id).value='');
+  }
+  openModal('modal-coach');
+}
+async function saveCoach() {
+  const editId = document.getElementById('coach-edit-id').value;
+  const name   = document.getElementById('coach-name').value.trim();
+  const email  = document.getElementById('coach-email').value.trim();
+  const title  = document.getElementById('coach-title').value.trim();
+  const phone  = document.getElementById('coach-phone').value.trim();
+  const clubId = document.getElementById('coach-club').value;
+  if (!name) { notify('Ad zorunlu!', 'error'); return; }
+  const { db, doc, setDoc, serverTimestamp } = window._fb;
+  if (editId) {
+    await setDoc(doc(db,'coaches',editId), {name,email,title,phone,clubId,updatedAt:serverTimestamp()}, {merge:true});
+    cache.coaches[editId] = {...cache.coaches[editId], name,email,title,phone,clubId};
+    notify('Antrenör güncellendi ✓', 'success');
+  } else {
+    const pw = document.getElementById('coach-pw').value;
+    if (!email) { notify('E-posta zorunlu!', 'error'); return; }
+    if (!pw || pw.length < 8) { notify('En az 8 karakterli şifre!', 'error'); return; }
+    try {
+      // Create secondary auth
+      const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+      const { getAuth: getAuth2, createUserWithEmailAndPassword: create2 } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+      const secondary = getApps().find(a=>a.name==='secondary2') ||
+        initializeApp(window._fb.auth.app.options, 'secondary2');
+      const auth2 = getAuth2(secondary);
+      const cred = await create2(auth2, email, pw);
+      const uid = cred.user.uid;
+      const coachData = {id:uid, name, email, title, phone, clubId, role:'coach', createdAt:serverTimestamp()};
+      await setDoc(doc(db,'coaches',uid), coachData);
+      await setDoc(doc(db,'users',uid), {...coachData});
+      cache.coaches[uid] = {id:uid, name, email, title, phone, clubId, role:'coach'};
+      await auth2.signOut();
+      notify('Antrenör oluşturuldu ✓', 'success');
+    } catch(e) { notify('Hata: '+e.message, 'error'); return; }
+  }
+  closeModal('modal-coach'); renderCoaches(); buildSidebar();
+}
+async function deleteCoach(id) {
+  const { db, doc, deleteDoc } = window._fb;
+  await deleteDoc(doc(db,'coaches',id));
+  delete cache.coaches[id];
+  notify('Antrenör silindi', 'info'); renderCoaches(); buildSidebar();
+}
+
+// ── ATHLETES ──────────────────────────────────────────────
+function renderAthletes() {
+  // Fill club filter
+  const clubFilter = document.getElementById('ath-filter-club');
+  const selectedClub = clubFilter.value;
+  clubFilter.innerHTML = '<option value="">Tüm Kulüpler</option>' +
+    Object.values(cache.clubs).sort((a,b)=>a.name.localeCompare(b.name,'tr')).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  clubFilter.value = selectedClub;
+
+  let athletes = Object.values(cache.athletes);
+  if (selectedClub) athletes = athletes.filter(a=>a.clubId===selectedClub);
+  athletes.sort((a,b)=>(a.name||'').localeCompare(b.name||'','tr'));
+
+  let html = `<div class="table-wrap"><table><thead><tr><th>Sporcu</th><th>Yıl/Cinsiyet</th><th>Kulüp</th><th>Antrenör</th><th>Branş</th><th></th></tr></thead><tbody>`;
+  athletes.forEach(a => {
+    const club = cache.clubs[a.clubId];
+    const coach = cache.coaches[a.coachId];
+    html += `<tr class="tr-click" onclick="showAthleteDetail('${a.id}')">
+      <td style="font-weight:600;color:var(--navy-400)">${a.name} <span class="text-muted">→</span></td>
+      <td class="text-mono text-sm">${a.year||'—'} · ${a.gender==='K'?'K':'E'}</td>
+      <td class="text-sm">${club?.name||'—'}</td>
+      <td class="text-sm text-muted">${coach?.name||'—'}</td>
+      <td><span class="pill pill-cyan">${a.stroke||'—'}</span></td>
+      <td onclick="event.stopPropagation()"><div style="display:flex;gap:4px">
+        <button class="btn btn-sm btn-ghost" onclick="openAthleteModal('${a.id}')">✏️</button>
+        <button class="btn btn-sm btn-danger" onclick="confirmDelete('Sporcu silinecek: ${a.name}',()=>deleteAthlete('${a.id}'))">Sil</button>
+      </div></td>
+    </tr>`;
+  });
+  if (!athletes.length) html += `<tr><td colspan="6"><div class="empty"><div class="empty-icon">🏅</div><p>Sporcu bulunamadı.</p></div></td></tr>`;
+  html += `</tbody></table></div>`;
+  document.getElementById('athletes-content').innerHTML = html;
+}
+function openAthleteModal(editId) {
+  document.getElementById('athlete-modal-title').textContent = editId ? 'Sporcuyu Düzenle' : 'Sporcu Ekle';
+  document.getElementById('ath-edit-id').value = editId || '';
+  const clubSel = document.getElementById('ath-club');
+  clubSel.innerHTML = Object.values(cache.clubs).sort((a,b)=>a.name.localeCompare(b.name,'tr')).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  if (editId) {
+    const a = cache.athletes[editId];
+    document.getElementById('ath-name').value = a.name||'';
+    document.getElementById('ath-year').value = a.year||'';
+    document.getElementById('ath-gender').value = a.gender||'K';
+    document.getElementById('ath-club').value = a.clubId||'';
+    document.getElementById('ath-stroke').value = a.stroke||'Serbest';
+    document.getElementById('ath-country').value = a.country||'';
+    updateCoachSelect(a.coachId);
+  } else {
+    ['ath-name','ath-year','ath-country'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('ath-gender').value = 'K';
+    document.getElementById('ath-stroke').value = 'Serbest';
+    updateCoachSelect();
+  }
+  openModal('modal-athlete');
+}
+function updateCoachSelect(selectedCoachId) {
+  const clubId = document.getElementById('ath-club').value;
+  const coachSel = document.getElementById('ath-coach');
+  const coaches = Object.values(cache.coaches).filter(c=>!clubId||c.clubId===clubId).sort((a,b)=>a.name.localeCompare(b.name,'tr'));
+  coachSel.innerHTML = '<option value="">— Antrenör seçin —</option>' + coaches.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  if (selectedCoachId) coachSel.value = selectedCoachId;
+}
+async function saveAthlete() {
+  const editId = document.getElementById('ath-edit-id').value;
+  const name   = document.getElementById('ath-name').value.trim();
+  const year   = document.getElementById('ath-year').value;
+  const gender = document.getElementById('ath-gender').value;
+  const clubId = document.getElementById('ath-club').value;
+  const coachId= document.getElementById('ath-coach').value;
+  const stroke = document.getElementById('ath-stroke').value;
+  const country= document.getElementById('ath-country').value.trim();
+  if (!name) { notify('Ad zorunlu!', 'error'); return; }
+  const { db, doc, setDoc, addDoc, collection, serverTimestamp } = window._fb;
+  const data = {name,year,gender,clubId,coachId,stroke,country};
+  if (editId) {
+    await setDoc(doc(db,'athletes',editId), {...data,updatedAt:serverTimestamp()}, {merge:true});
+    cache.athletes[editId] = {...cache.athletes[editId], ...data};
+    notify('Sporcu güncellendi ✓', 'success');
+  } else {
+    const ref = await addDoc(collection(db,'athletes'), {...data,createdAt:serverTimestamp()});
+    cache.athletes[ref.id] = {id:ref.id, ...data};
+    notify('Sporcu eklendi ✓', 'success');
+  }
+  closeModal('modal-athlete'); renderAthletes(); buildSidebar();
+}
+async function deleteAthlete(id) {
+  const { db, doc, deleteDoc } = window._fb;
+  await deleteDoc(doc(db,'athletes',id));
+  delete cache.athletes[id];
+  notify('Sporcu silindi', 'info'); renderAthletes(); buildSidebar();
+}
+
+// ── ATHLETE DETAIL ────────────────────────────────────────
+function renderAthleteDetail(athleteId) {
+  const ath = cache.athletes[athleteId]; if (!ath) return;
+  const club = cache.clubs[ath.clubId];
+  const coach = cache.coaches[ath.coachId];
+  document.getElementById('ath-detail-title').textContent = ath.name;
+  document.getElementById('ath-detail-actions').innerHTML = `
+    <button class="btn btn-sm" onclick="openAthleteModal('${athleteId}')">✏️ Düzenle</button>`;
+
+  let html = `
+    <div class="card mb-4">
+      <div style="height:70px;background:linear-gradient(135deg,var(--navy-800),var(--navy-500),var(--cyan-500))"></div>
+      <div style="padding:0 20px 20px">
+        <div style="display:flex;align-items:flex-end;gap:14px;margin-top:-28px;margin-bottom:12px;flex-wrap:wrap">
+          <div style="width:58px;height:58px;border-radius:50%;border:3px solid var(--white);background:var(--navy-600);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--cyan-500);flex-shrink:0">${initials(ath.name)}</div>
+          <div>
+            <div style="font-size:18px;font-weight:800;color:var(--navy-700)">${ath.name}</div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:2px">${club?.name||'—'} · ${coach?.name||'—'} · ${ath.year||'—'} · ${ath.gender==='K'?'Kadın':'Erkek'}</div>
+          </div>
+          <span class="pill pill-cyan" style="margin-left:auto">${ath.stroke||'—'}</span>
+        </div>
+      </div>
+    </div>`;
+
+  // Analysis modules
+  html += `<h2 style="font-size:14px;font-weight:700;color:var(--navy-700);margin-bottom:12px">Analiz Modülleri</h2>
+  <div class="module-grid">
+    <div class="module-card" onclick="openModule('swimbetter','${athleteId}')">
+      <div class="module-icon">🌊</div>
+      <div class="module-name">SwimBetter</div>
+      <div class="module-desc">EOLAB kuvvet, vuruş hızı, el yolu ve tutarlılık analizi</div>
+      <div class="module-count">JSON yükle → otomatik analiz</div>
+    </div>
+    <div class="module-card" onclick="openModule('velocitymeter','${athleteId}')">
+      <div class="module-icon">⚡</div>
+      <div class="module-name">VelocityMeter</div>
+      <div class="module-desc">APLab hız, ivme ve mesafe profili analizi</div>
+      <div class="module-count">CSV/TXT yükle → otomatik analiz</div>
+    </div>
+    <div class="module-card" onclick="openModule('video','${athleteId}')">
+      <div class="module-icon">🎬</div>
+      <div class="module-name">Video Analiz</div>
+      <div class="module-desc">Manuel veri girişi, sürat grafiği, detaylı yorum</div>
+      <div class="module-count">Tüm branş ve mesafeler</div>
+    </div>
+    <div class="module-card" onclick="openModule('race','${athleteId}')">
+      <div class="module-icon">🏁</div>
+      <div class="module-name">Yarış Analizi</div>
+      <div class="module-desc">Split bazlı hız, kadans, DPS karşılaştırmalı analiz</div>
+      <div class="module-count">Çoklu sporcu/tarih karşılaştırma</div>
+    </div>
+  </div>`;
+
+  document.getElementById('ath-detail-content').innerHTML = html;
+}
+
+function openModule(module, athleteId) {
+  currentAthleteId = athleteId;
+  currentAnalysisModule = module;
+  currentView = 'analysis';
+  const all = ['dashboard','clubs','coaches','athletes','athlete-detail','analysis','profile'];
+  all.forEach(v => document.getElementById('view-'+v)?.classList.add('hidden'));
+  document.getElementById('view-analysis').classList.remove('hidden');
+  const ath = cache.athletes[athleteId];
+  const moduleNames = {swimbetter:'🌊 SwimBetter',velocitymeter:'⚡ VelocityMeter',video:'🎬 Video Analiz',race:'🏁 Yarış Analizi'};
+  document.getElementById('analysis-title').textContent = `${moduleNames[module]} — ${ath?.name||''}`;
+  document.getElementById('analysis-back-btn').onclick = () => showAthleteDetail(athleteId);
+  buildSidebar();
+  renderModule(module, athleteId);
+}
+
+function renderModule(module, athleteId) {
+  const cont = document.getElementById('analysis-content');
+  if (module === 'swimbetter') renderSwimBetterModule(athleteId, cont);
+  else if (module === 'velocitymeter') renderVelocityMeterModule(athleteId, cont);
+  else if (module === 'video') renderVideoModule(athleteId, cont);
+  else if (module === 'race') renderRaceModule(athleteId, cont);
+}
+
+// ════════════════════════════════════════════════════════
+// MODULE ENGINE — SWIMBETTER, VELOCITYMETER, VIDEO, RACE
+// ════════════════════════════════════════════════════════
+
+// ── Constants ────────────────────────────────────────────
+const STROKES = ['Serbest','Kelebek','Sırtüstü','Kurbağalama','Karışık'];
+const DISTANCES = {
+  'Serbest':  ['50m','100m','200m','400m','800m','1500m'],
+  'Kelebek':  ['50m','100m','200m'],
+  'Sırtüstü': ['50m','100m','200m'],
+  'Kurbağalama':['50m','100m','200m'],
+  'Karışık':  ['100m','200m','400m'],
+};
+const POOLS = ['Uzun Kulvar (50m)','Kısa Kulvar (25m)'];
+
+function getSplits(stroke, distance) {
+  const d = parseInt(distance);
+  if (stroke === 'Kelebek' || stroke === 'Sırtüstü' || stroke === 'Kurbağalama') {
+    if (d <= 50) return ['0-25m','25-50m'];
+    if (d === 100) return ['0-25m','25-50m','50-75m','75-100m'];
+    return ['0-25m','25-50m','50-75m','75-100m','100-125m','125-150m','150-175m','175-200m'];
+  }
+  // Serbest ve Karışık
+  const splits = [];
+  for (let i = 0; i < d; i += 25) splits.push(`${i}-${i+25}m`);
+  return splits;
+}
+
+// ── Stroke/Distance selectors ─────────────────────────────
+function strokeDistanceSelector(prefix, onchange='') {
+  return `<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+    <div class="form-group">
+      <label class="form-label">Stil *</label>
+      <select class="form-select" id="${prefix}-stroke" style="width:130px" onchange="${onchange}">
+        ${STROKES.map(s=>`<option>${s}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Mesafe *</label>
+      <select class="form-select" id="${prefix}-distance" style="width:100px" onchange="${onchange}">
+        ${DISTANCES['Serbest'].map(d=>`<option>${d}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Kulvar *</label>
+      <select class="form-select" id="${prefix}-pool" style="width:160px">
+        ${POOLS.map(p=>`<option>${p}</option>`).join('')}
+      </select>
+    </div>
+  </div>`;
+}
+
+function updateDistanceOptions(prefix) {
+  const stroke = document.getElementById(prefix+'-stroke')?.value || 'Serbest';
+  const distSel = document.getElementById(prefix+'-distance');
+  if (!distSel) return;
+  const cur = distSel.value;
+  distSel.innerHTML = (DISTANCES[stroke]||DISTANCES['Serbest']).map(d=>`<option ${d===cur?'selected':''}>${d}</option>`).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// SWIMBETTER MODULE
+// ════════════════════════════════════════════════════════
+
+let sbSessions = {}; // athleteId → [sessions]
+
+async function renderSwimBetterModule(athleteId, cont) {
+  // Load existing sessions
+  await loadSBSessions(athleteId);
+  cont.innerHTML = `
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>🌊 SwimBetter Analizi</h2>
+        <span class="text-muted text-sm">JSON dosyası yükle → otomatik parse</span>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom:14px">${strokeDistanceSelector('sb','updateDistanceOptions("sb")')}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <div class="form-group"><label class="form-label">Tarih *</label><input type="date" class="form-input" id="sb-date" style="width:150px" value="${new Date().toISOString().slice(0,10)}"></div>
+          <div class="form-group"><label class="form-label">Notlar</label><input class="form-input" id="sb-notes" placeholder="opsiyonel" style="width:220px"></div>
+        </div>
+        <div style="margin-bottom:8px;font-size:11px;color:var(--gray-500);font-weight:600">SWIMBETTER JSON DOSYALARI <span style="color:var(--gray-400);font-weight:400">(birden fazla dosya yüklenebilir)</span></div>
+        <div class="upload-zone" id="sb-upload-zone" onclick="document.getElementById('sb-file-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleSBDrop(event,'${athleteId}')">
+          <div class="uz-icon">📁</div>
+          <div class="uz-text">JSON dosyalarını sürükle bırak veya tıkla</div>
+          <div class="uz-sub">Stroke Rate & Force · Force Field · Hand Path · Consistency · Stroke Phases · Power vs Time</div>
+        </div>
+        <input type="file" id="sb-file-input" accept=".json" multiple style="display:none" onchange="handleSBFiles(event,'${athleteId}')">
+        <div id="sb-uploaded-files" style="margin-top:10px;display:flex;flex-direction:column;gap:6px"></div>
+        <div style="margin-top:14px;display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="saveSBSession('${athleteId}')">💾 Seansı Kaydet</button>
+          <button class="btn btn-ghost" onclick="clearSBFiles()">✕ Temizle</button>
+        </div>
+      </div>
+    </div>
+    <div id="sb-sessions-list"></div>`;
+  renderSBSessionsList(athleteId);
+}
+
+let sbUploadedFiles = {};
+
+function handleSBDrop(event, athleteId) {
+  event.preventDefault();
+  document.getElementById('sb-upload-zone').classList.remove('dragover');
+  const files = Array.from(event.dataTransfer.files).filter(f=>f.name.endsWith('.json'));
+  processSBFiles(files);
+}
+function handleSBFiles(event, athleteId) {
+  const files = Array.from(event.target.files);
+  processSBFiles(files);
+}
+function processSBFiles(files) {
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        const type = detectSBFileType(file.name, data);
+        sbUploadedFiles[type] = { name: file.name, data, type };
+        renderSBFileList();
+      } catch(err) {
+        notify('Geçersiz JSON: ' + file.name, 'error');
+      }
+    };
+    reader.readAsText(file);
+  });
+}
+function detectSBFileType(filename, data) {
+  const fn = filename.toLowerCase();
+  if (fn.includes('stroke_rate') && fn.includes('lap')) return 'sr_lap';
+  if (fn.includes('stroke_rate') && fn.includes('stroke')) return 'sr_stroke';
+  if (fn.includes('force_field') && fn.includes('lap')) return 'ff_lap';
+  if (fn.includes('force_field') && fn.includes('stroke')) return 'ff_stroke';
+  if (fn.includes('hand_path')) return 'hand_path';
+  if (fn.includes('consistency')) return 'consistency';
+  if (fn.includes('stroke_phase')) return 'stroke_phase';
+  if (fn.includes('power_vs_time') || fn.includes('power vs time')) return 'power_time';
+  // Detect by data structure
+  if (data[0] && 'avgLapRate' in data[0]) return 'sr_lap';
+  if (data[0] && 'forceLeft' in data[0]) return 'sr_stroke';
+  if (data[0] && 'angle' in data[0] && 'left' in data[0]) return 'ff_lap';
+  if (data[0] && 'valueX' in data[0]) return 'hand_path';
+  if (data[0] && 'sideONxAxis0' in data[0]) return 'consistency';
+  if (data[0] && 'leftForward' in data[0]) return 'power_time';
+  return 'unknown_' + filename;
+}
+const SB_TYPE_LABELS = {
+  sr_lap: '📊 Stroke Rate & Force (Lap)',
+  sr_stroke: '📊 Stroke Rate & Force (Stroke)',
+  ff_lap: '🎯 Force Field (Lap)',
+  ff_stroke: '🎯 Force Field (Stroke)',
+  hand_path: '✋ Hand Path',
+  consistency: '🔄 Consistency',
+  stroke_phase: '⏱ Stroke Phases',
+  power_time: '⚡ Power vs Time',
+};
+function renderSBFileList() {
+  const cont = document.getElementById('sb-uploaded-files');
+  if (!cont) return;
+  cont.innerHTML = Object.values(sbUploadedFiles).map(f => {
+    const label = SB_TYPE_LABELS[f.type] || f.type;
+    return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--green-dim);border:1px solid var(--green);border-radius:var(--r);font-size:11px">
+      <span style="color:var(--green)">✓</span>
+      <span style="font-weight:600;color:var(--gray-700)">${label}</span>
+      <span class="text-muted">${f.name}</span>
+      <button onclick="delete sbUploadedFiles['${f.type}'];renderSBFileList()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:12px">✕</button>
+    </div>`;
+  }).join('');
+}
+function clearSBFiles() { sbUploadedFiles = {}; renderSBFileList(); }
+
+async function saveSBSession(athleteId) {
+  if (Object.keys(sbUploadedFiles).length === 0) { notify('En az bir JSON dosyası yükleyin!', 'error'); return; }
+  const date = document.getElementById('sb-date')?.value;
+  if (!date) { notify('Tarih seçin!', 'error'); return; }
+  const stroke = document.getElementById('sb-stroke')?.value;
+  const distance = document.getElementById('sb-distance')?.value;
+  const pool = document.getElementById('sb-pool')?.value;
+  const notes = document.getElementById('sb-notes')?.value.trim();
+  const { db, addDoc, collection, serverTimestamp } = window._fb;
+  const sessionData = {
+    athleteId, module: 'swimbetter', date, stroke, distance, pool, notes,
+    files: Object.fromEntries(Object.entries(sbUploadedFiles).map(([k,v])=>([k, JSON.stringify(v.data)]))),
+    createdAt: serverTimestamp(), createdBy: currentProfile.id
+  };
+  const ref = await addDoc(collection(db,'analyses'), sessionData);
+  if (!sbSessions[athleteId]) sbSessions[athleteId] = [];
+  sbSessions[athleteId].push({ id: ref.id, ...sessionData, files: Object.fromEntries(Object.entries(sbUploadedFiles).map(([k,v])=>([k,v.data]))) });
+  clearSBFiles();
+  notify('SwimBetter seansı kaydedildi ✓', 'success');
+  renderSBSessionsList(athleteId);
+}
+
+async function loadSBSessions(athleteId) {
+  const { db, getDocs, collection, query, where } = window._fb;
+  const snap = await getDocs(query(collection(db,'analyses'), where('athleteId','==',athleteId), where('module','==','swimbetter')));
+  sbSessions[athleteId] = [];
+  snap.forEach(d => {
+    const data = d.data();
+    const files = {};
+    if (data.files) Object.entries(data.files).forEach(([k,v]) => { try { files[k] = typeof v === 'string' ? JSON.parse(v) : v; } catch(e){} });
+    sbSessions[athleteId].push({ id: d.id, ...data, files });
+  });
+}
+
+function renderSBSessionsList(athleteId) {
+  const cont = document.getElementById('sb-sessions-list');
+  if (!cont) return;
+  const sessions = (sbSessions[athleteId] || []).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if (!sessions.length) { cont.innerHTML = `<div class="empty"><div class="empty-icon">🌊</div><p>Henüz SwimBetter seansı yok.</p></div>`; return; }
+  cont.innerHTML = sessions.map(s => {
+    const fileTypes = s.files ? Object.keys(s.files).map(k=>SB_TYPE_LABELS[k]||k).join(', ') : '—';
+    return `<div class="session-card" onclick="openSBSession('${s.id}','${athleteId}')">
+      <div class="session-info">
+        <div class="s-title">🌊 ${s.stroke} ${s.distance} · ${s.pool}</div>
+        <div class="s-meta">${s.date} ${s.notes?'· '+s.notes:''}</div>
+        <div style="font-size:10px;color:var(--gray-400);margin-top:4px">${fileTypes}</div>
+      </div>
+      <div class="session-actions">
+        <button class="btn btn-sm btn-cyan" onclick="event.stopPropagation();openSBSession('${s.id}','${athleteId}')">Görüntüle</button>
+        <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();deleteSession('${s.id}','${athleteId}','swimbetter')">Sil</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openSBSession(sessionId, athleteId) {
+  const session = sbSessions[athleteId]?.find(s=>s.id===sessionId);
+  if (!session) return;
+  // Show analysis view
+  document.getElementById('analysis-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="openModule('swimbetter','${athleteId}')">← Geri</button>
+      <span style="font-size:14px;font-weight:700;color:var(--navy-700)">🌊 ${session.stroke} ${session.distance} · ${session.date}</span>
+      <span class="pill pill-cyan">${session.pool}</span>
+      ${session.notes?`<span class="text-muted text-sm">${session.notes}</span>`:''}
+    </div>
+    <div id="sb-analysis-tabs">
+      <div class="tabs">
+        ${session.files.sr_lap||session.files.sr_stroke?'<button class="tab-btn active" onclick="sbTab('stroke_rate',this)">📊 Stroke Rate & Force</button>':''}
+        ${session.files.ff_lap?'<button class="tab-btn" onclick="sbTab('force_field',this)">🎯 Force Field</button>':''}
+        ${session.files.hand_path?'<button class="tab-btn" onclick="sbTab('hand_path',this)">✋ Hand Path</button>':''}
+        ${session.files.consistency?'<button class="tab-btn" onclick="sbTab('consistency',this)">🔄 Consistency</button>':''}
+        ${session.files.stroke_phase?'<button class="tab-btn" onclick="sbTab('stroke_phase',this)">⏱ Stroke Phases</button>':''}
+        ${session.files.power_time?'<button class="tab-btn" onclick="sbTab('power_time',this)">⚡ Power vs Time</button>':''}
+      </div>
+      <div id="sb-tab-content"></div>
+    </div>`;
+  window._sbSession = session;
+  // Show first available tab
+  const firstTab = document.querySelector('#sb-analysis-tabs .tab-btn');
+  if (firstTab) firstTab.click();
+}
+
+function sbTab(tab, btn) {
+  document.querySelectorAll('#sb-analysis-tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const session = window._sbSession;
+  const cont = document.getElementById('sb-tab-content');
+  if (!cont || !session) return;
+  if (tab === 'stroke_rate') renderSBStrokeRate(session, cont);
+  else if (tab === 'force_field') renderSBForceField(session, cont);
+  else if (tab === 'hand_path') renderSBHandPath(session, cont);
+  else if (tab === 'consistency') renderSBConsistency(session, cont);
+  else if (tab === 'stroke_phase') renderSBStrokePhase(session, cont);
+  else if (tab === 'power_time') renderSBPowerTime(session, cont);
+}
+
+function renderSBStrokeRate(session, cont) {
+  const lapData = session.files.sr_lap;
+  const strokeData = session.files.sr_stroke;
+  let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;flex-wrap:wrap">';
+  if (lapData && lapData[0]) {
+    const d = lapData[0];
+    html += `<div class="card"><div class="card-header"><h2>Tur Ortalaması</h2></div><div class="card-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        ${metricBox('Sol Kuvvet', d.leftLapForce?.toFixed(1)+'N', 'c-cyan')}
+        ${metricBox('Sağ Kuvvet', d.rightLapForce?.toFixed(1)+'N', 'c-teal')}
+        ${metricBox('Sol İtici', d.leftPropulsion?.toFixed(1)+'N', 'c-cyan')}
+        ${metricBox('Sağ İtici', d.rightPropulsion?.toFixed(1)+'N', 'c-teal')}
+        ${metricBox('Ort. Kadans', d.avgLapRate?.toFixed(1)+' str/min', 'c-amber')}
+        ${metricBox('Asimetri', (Math.abs(d.leftLapForce-d.rightLapForce)/Math.max(d.leftLapForce,d.rightLapForce)*100).toFixed(1)+'%', d.leftLapForce>d.rightLapForce*0.9?'c-green':'c-red')}
+      </div>
+    </div></div>`;
+  }
+  html += '</div>';
+  if (strokeData && strokeData.length) {
+    html += `<div class="card mb-4"><div class="card-header"><h2>Vuruş Bazlı Veriler</h2></div>
+    <div style="overflow-x:auto"><table><thead><tr>
+      <th>#</th><th>Sol Kuvvet</th><th>Sağ Kuvvet</th><th>Sol İtici</th><th>Sağ İtici</th><th>Sol Kadans</th><th>Sağ Kadans</th>
+    </tr></thead><tbody>`;
+    strokeData.forEach((s,i) => {
+      const asym = Math.abs(s.forceLeft-s.forceRight)/Math.max(s.forceLeft,s.forceRight)*100;
+      html += `<tr>
+        <td class="text-mono">${i+1}</td>
+        <td class="text-mono" style="color:var(--cyan-500)">${s.forceLeft?.toFixed(1)}</td>
+        <td class="text-mono" style="color:var(--teal)">${s.forceRight?.toFixed(1)}</td>
+        <td class="text-mono" style="color:var(--cyan-500)">${s.propulsionLeft?.toFixed(1)}</td>
+        <td class="text-mono" style="color:var(--teal)">${s.propulsionRight?.toFixed(1)}</td>
+        <td class="text-mono">${s.strokeRateLeft?.toFixed(1)}</td>
+        <td class="text-mono">${s.strokeRateRight?.toFixed(1)}</td>
+      </tr>`;
+    });
+    html += '</tbody></table></div></div>';
+  }
+  cont.innerHTML = html;
+}
+
+function renderSBForceField(session, cont) {
+  const data = session.files.ff_lap;
+  if (!data) { cont.innerHTML = '<div class="empty"><p>Force Field verisi yok.</p></div>'; return; }
+  // Find active range
+  const active = data.filter(d=>d.left>0.5||d.right>0.5);
+  const leftPeak = data.reduce((max,d)=>d.left>max.left?d:max, {left:0,angle:0});
+  const rightPeak = data.reduce((max,d)=>d.right>max.right?d:max, {right:0,angle:0});
+  cont.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+      ${metricBox('Sol Pik Açısı', leftPeak.angle+'°', 'c-cyan')}
+      ${metricBox('Sağ Pik Açısı', rightPeak.angle+'°', 'c-teal')}
+      ${metricBox('Aktif Açı Aralığı', active.length+'°', 'c-amber')}
+    </div>
+    <div class="card"><div class="card-header"><h2>Force Field — Açısal Kuvvet Dağılımı</h2><span class="text-muted text-sm">0-360° · Sol vs Sağ</span></div>
+    <div class="card-body">
+      <canvas id="ff-canvas" width="700" height="300"></canvas>
+    </div></div>`;
+  setTimeout(()=>drawFFChart(data), 50);
+}
+
+function drawFFChart(data) {
+  const canvas = document.getElementById('ff-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const angles = data.map(d=>d.angle);
+  const maxVal = Math.max(...data.map(d=>Math.max(d.left,d.right)));
+  // Grid
+  ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+  for (let i=0;i<=4;i++) { const y = H-20-(i/4)*(H-40); ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(W-10,y);ctx.stroke(); ctx.fillStyle='#94a3b8';ctx.font='10px Inter';ctx.fillText((maxVal*i/4).toFixed(0),2,y+4); }
+  const step = (W-50)/data.length;
+  // Left line
+  ctx.strokeStyle = '#00c8ff'; ctx.lineWidth = 2; ctx.beginPath();
+  data.forEach((d,i) => { const x=40+i*step, y=H-20-(d.left/maxVal)*(H-40); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+  ctx.stroke();
+  // Right line
+  ctx.strokeStyle = '#00b8a9'; ctx.lineWidth = 2; ctx.beginPath();
+  data.forEach((d,i) => { const x=40+i*step, y=H-20-(d.right/maxVal)*(H-40); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+  ctx.stroke();
+  // X labels
+  ctx.fillStyle='#94a3b8'; ctx.font='9px Inter';
+  [0,90,180,270,360].forEach(a => { const i=data.findIndex(d=>d.angle>=a); if(i>=0){ctx.fillText(a+'°',40+i*step-8,H-5);} });
+  // Legend
+  ctx.fillStyle='#00c8ff';ctx.fillRect(W-120,10,12,3);ctx.fillStyle='#334155';ctx.font='11px Inter';ctx.fillText('Sol',W-104,16);
+  ctx.fillStyle='#00b8a9';ctx.fillRect(W-120,22,12,3);ctx.fillStyle='#334155';ctx.fillText('Sağ',W-104,28);
+}
+
+function renderSBHandPath(session, cont) {
+  const data = session.files.hand_path;
+  if (!data) { cont.innerHTML = '<div class="empty"><p>Hand Path verisi yok.</p></div>'; return; }
+  const phases = {catch:[],pull:[],recovery:[]};
+  data.forEach(d => { if(d.seriesName) phases[d.seriesName]?.push(d); });
+  cont.innerHTML = `<div class="card"><div class="card-header"><h2>Hand Path — El Yolu (Side On)</h2><span class="text-muted text-sm">X ekseni yatay · Y ekseni derinlik</span></div>
+    <div class="card-body"><canvas id="hp-canvas" width="600" height="350"></canvas>
+    <div style="display:flex;gap:16px;margin-top:10px;font-size:11px">
+      <span style="color:#ef4444">● Catch</span>
+      <span style="color:#f59e0b">● Pull</span>
+      <span style="color:#64748b">● Recovery</span>
+      <span style="color:#00c8ff">● Yol</span>
+    </div></div></div>`;
+  setTimeout(()=>drawHandPath(data), 50);
+}
+
+function drawHandPath(data) {
+  const canvas = document.getElementById('hp-canvas'); if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const xs=data.map(d=>d.valueX), ys=data.map(d=>d.valueY);
+  const xMin=Math.min(...xs), xMax=Math.max(...xs), yMin=Math.min(...ys), yMax=Math.max(...ys);
+  const px=(x)=>40+(x-xMin)/(xMax-xMin)*(W-60);
+  const py=(y)=>H-40-(y-yMin)/(yMax-yMin)*(H-60);
+  // Axes
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(40,20);ctx.lineTo(40,H-40);ctx.lineTo(W-20,H-40);ctx.stroke();
+  // Path
+  ctx.strokeStyle='#00c8ff';ctx.lineWidth=1.5;ctx.beginPath();
+  data.forEach((d,i)=>{ i===0?ctx.moveTo(px(d.valueX),py(d.valueY)):ctx.lineTo(px(d.valueX),py(d.valueY)); });
+  ctx.stroke();
+  // Phase markers
+  const phaseColors={catch:'#ef4444',pull:'#f59e0b',recovery:'#64748b'};
+  data.filter(d=>d.seriesName).forEach(d=>{
+    ctx.fillStyle=phaseColors[d.seriesName]||'#333';
+    ctx.beginPath();ctx.arc(px(d.valueX),py(d.valueY),5,0,Math.PI*2);ctx.fill();
+  });
+}
+
+function renderSBConsistency(session, cont) {
+  const data = session.files.consistency;
+  if (!data) { cont.innerHTML = '<div class="empty"><p>Consistency verisi yok.</p></div>'; return; }
+  const nStrokes = Object.keys(data[0]||{}).filter(k=>k.startsWith('sideONxAxis')).length;
+  // Active strokes toggle
+  if (!window._sbActiveStrokes) window._sbActiveStrokes = Array.from({length:nStrokes},(_,i)=>i);
+  cont.innerHTML = `<div class="card mb-4"><div class="card-header"><h2>Consistency — El Yolu Tutarlılığı</h2><span class="text-muted text-sm">Tüm kollar üst üste · Side On görünüm</span></div>
+    <div class="card-body">
+      <canvas id="cons-canvas" width="700" height="320"></canvas>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+        <button class="btn btn-sm" onclick="selectAllStrokes(${nStrokes})">Tümünü Seç</button>
+        <button class="btn btn-sm btn-ghost" onclick="clearAllStrokes()">Temizle</button>
+        <span class="text-muted text-xs" style="margin-left:4px">${nStrokes} kol</span>
+      </div>
+      <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px" id="cons-stroke-toggles">
+        ${Array.from({length:nStrokes},(_,i)=>`<button class="btn btn-sm ${window._sbActiveStrokes.includes(i)?'btn-cyan':'btn-ghost'}" onclick="toggleStroke(${i},${nStrokes})" style="min-width:34px">${i+1}</button>`).join('')}
+      </div>
+    </div></div>`;
+  setTimeout(()=>drawConsistency(data, nStrokes), 50);
+}
+
+function drawConsistency(data, nStrokes) {
+  const canvas = document.getElementById('cons-canvas'); if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const active = window._sbActiveStrokes || Array.from({length:nStrokes},(_,i)=>i);
+  if (!data.length) return;
+  // Collect all X/Y for scaling
+  const allX=[], allY=[];
+  data.forEach(row => active.forEach(si => { allX.push(row[`sideONxAxis${si}`]||0); allY.push(row[`sideONdepth${si}`]||0); }));
+  const xMin=Math.min(...allX,0),xMax=Math.max(...allX,0),yMin=Math.min(...allY,0),yMax=Math.max(...allY,0);
+  const px=(x)=>40+(x-xMin)/(xMax-xMin||1)*(W-60);
+  const py=(y)=>H-40-(y-yMin)/(yMax-yMin||1)*(H-60);
+  // Axes
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(40,20);ctx.lineTo(40,H-40);ctx.lineTo(W-20,H-40);ctx.stroke();
+  // Zero line
+  ctx.strokeStyle='rgba(0,200,255,0.3)';ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(40,py(0));ctx.lineTo(W-20,py(0));ctx.stroke();
+  ctx.setLineDash([]);
+  // Draw each active stroke
+  active.forEach((si,idx) => {
+    const hue = (idx/active.length)*200+180;
+    ctx.strokeStyle = `hsla(${hue},70%,60%,0.5)`;
+    ctx.lineWidth = 1.2; ctx.beginPath();
+    let started = false;
+    data.forEach(row => {
+      const x=row[`sideONxAxis${si}`], y=row[`sideONdepth${si}`];
+      if(x==null) return;
+      started?ctx.lineTo(px(x),py(y)):ctx.moveTo(px(x),py(y));
+      started=true;
+    });
+    ctx.stroke();
+  });
+}
+
+function selectAllStrokes(n) { window._sbActiveStrokes=Array.from({length:n},(_,i)=>i); document.querySelectorAll('#cons-stroke-toggles button').forEach(b=>b.className='btn btn-sm btn-cyan'); const s=window._sbSession; if(s&&s.files.consistency) drawConsistency(s.files.consistency,n); }
+function clearAllStrokes() { window._sbActiveStrokes=[]; document.querySelectorAll('#cons-stroke-toggles button').forEach(b=>b.className='btn btn-sm btn-ghost'); const s=window._sbSession; if(s&&s.files.consistency) drawConsistency(s.files.consistency,0); }
+function toggleStroke(idx, total) {
+  if(!window._sbActiveStrokes) window._sbActiveStrokes=[];
+  const i=window._sbActiveStrokes.indexOf(idx);
+  if(i>=0) window._sbActiveStrokes.splice(i,1); else window._sbActiveStrokes.push(idx);
+  document.querySelectorAll('#cons-stroke-toggles button')[idx].className='btn btn-sm '+(window._sbActiveStrokes.includes(idx)?'btn-cyan':'btn-ghost');
+  const s=window._sbSession; if(s&&s.files.consistency) drawConsistency(s.files.consistency,total);
+}
+
+function renderSBStrokePhase(session, cont) {
+  const data = session.files.stroke_phase;
+  if (!data||!data[0]||!data[0].length) { cont.innerHTML = '<div class="empty"><p>Stroke Phases verisi yok.</p></div>'; return; }
+  cont.innerHTML = '<div class="card"><div class="card-header"><h2>Stroke Phases — Faz Süreleri</h2></div><div class="card-body"><p class="text-muted text-sm">Stroke Phases verisi her kol için ayrı indirilmektedir. Lap ortalaması için Lap View kullanınız.</p></div></div>';
+}
+
+function renderSBPowerTime(session, cont) {
+  const data = session.files.power_time;
+  if (!data) { cont.innerHTML = '<div class="empty"><p>Power vs Time verisi yok.</p></div>'; return; }
+  const nonzero = data.filter(d=>d.leftForward>1||d.rightForward>1);
+  const maxL = Math.max(...data.map(d=>d.leftForward));
+  const maxR = Math.max(...data.map(d=>d.rightForward));
+  const avgL = nonzero.length?nonzero.reduce((s,d)=>s+d.leftForward,0)/nonzero.length:0;
+  const avgR = nonzero.length?nonzero.reduce((s,d)=>s+d.rightForward,0)/nonzero.length:0;
+  cont.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+      ${metricBox('Sol Maks Güç', maxL.toFixed(0)+'W', 'c-cyan')}
+      ${metricBox('Sağ Maks Güç', maxR.toFixed(0)+'W', 'c-teal')}
+      ${metricBox('Sol Ort Güç', avgL.toFixed(0)+'W', 'c-cyan')}
+      ${metricBox('Sağ Ort Güç', avgR.toFixed(0)+'W', 'c-teal')}
+    </div>
+    <div class="card"><div class="card-header"><h2>Power vs Time</h2><span class="text-muted text-sm">İleri yönde güç (W) — Sol vs Sağ</span></div>
+    <div class="card-body"><canvas id="pt-canvas" width="700" height="280"></canvas>
+    <div style="display:flex;gap:16px;margin-top:8px;font-size:11px">
+      <span style="color:var(--cyan-500)">● Sol</span><span style="color:var(--teal)">● Sağ</span>
+    </div></div></div>`;
+  setTimeout(()=>drawPowerTime(data), 50);
+}
+
+function drawPowerTime(data) {
+  const canvas = document.getElementById('pt-canvas'); if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const maxV = Math.max(...data.map(d=>Math.max(d.leftForward,d.rightForward)),1);
+  const step = (W-50)/data.length;
+  // Grid
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=H-25-(i/4)*(H-45);ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(W-10,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='9px Inter';ctx.fillText((maxV*i/4).toFixed(0),2,y+3);}
+  // Left
+  ctx.strokeStyle='#00c8ff';ctx.lineWidth=1.5;ctx.beginPath();
+  data.forEach((d,i)=>{const x=40+i*step,y=H-25-(d.leftForward/maxV)*(H-45);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  // Right
+  ctx.strokeStyle='#00b8a9';ctx.lineWidth=1.5;ctx.beginPath();
+  data.forEach((d,i)=>{const x=40+i*step,y=H-25-(d.rightForward/maxV)*(H-45);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  // Time labels
+  ctx.fillStyle='#94a3b8';ctx.font='9px Inter';
+  const timePoints = data.filter(d=>d.leftTime>0).map(d=>d.leftTime);
+  if(timePoints.length) { const maxT=timePoints[timePoints.length-1]/1000; [0,0.25,0.5,0.75,1].forEach(t=>{const i=Math.floor(t*(data.length-1));ctx.fillText((t*maxT).toFixed(1)+'s',40+i*step-8,H-8);}); }
+}
+
+// ── Helper: metric box ────────────────────────────────────
+function metricBox(label, value, cls='') {
+  return `<div class="metric-card ${cls}" style="padding:10px 12px">
+    <div class="m-label">${label}</div>
+    <div class="m-value" style="font-size:18px">${value||'—'}</div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// VELOCITYMETER MODULE
+// ════════════════════════════════════════════════════════
+
+let vmSessions = {};
+
+async function renderVelocityMeterModule(athleteId, cont) {
+  await loadVMSessions(athleteId);
+  cont.innerHTML = `
+    <div class="card mb-4">
+      <div class="card-header"><h2>⚡ VelocityMeter Analizi</h2><span class="text-muted text-sm">CSV/TXT yükle → otomatik parse</span></div>
+      <div class="card-body">
+        <div style="margin-bottom:14px">${strokeDistanceSelector('vm','updateDistanceOptions("vm")')}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <div class="form-group"><label class="form-label">Tarih *</label><input type="date" class="form-input" id="vm-date" style="width:150px" value="${new Date().toISOString().slice(0,10)}"></div>
+          <div class="form-group"><label class="form-label">Notlar</label><input class="form-input" id="vm-notes" placeholder="opsiyonel" style="width:220px"></div>
+        </div>
+        <div class="upload-zone" onclick="document.getElementById('vm-file-input').click()">
+          <div class="uz-icon">⚡</div>
+          <div class="uz-text">CSV veya TXT dosyasını sürükle bırak veya tıkla</div>
+          <div class="uz-sub">APLab VelocityMeter export · noktalı virgül ayraç · virgüllü ondalık</div>
+        </div>
+        <input type="file" id="vm-file-input" accept=".csv,.txt" style="display:none" onchange="handleVMFile(event,'${athleteId}')">
+        <div id="vm-file-preview" style="margin-top:10px"></div>
+        <div style="margin-top:14px;display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="saveVMSession('${athleteId}')">💾 Seansı Kaydet</button>
+          <button class="btn btn-ghost" onclick="clearVMFile()">✕ Temizle</button>
+        </div>
+      </div>
+    </div>
+    <div id="vm-sessions-list"></div>`;
+  renderVMSessionsList(athleteId);
+}
+
+let vmParsedData = null;
+
+function handleVMFile(event, athleteId) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    vmParsedData = parseVMFile(e.target.result);
+    if (!vmParsedData.length) { notify('Dosya parse edilemedi!', 'error'); return; }
+    const maxSpeed = Math.max(...vmParsedData.map(d=>d.speed));
+    const maxDist  = vmParsedData[vmParsedData.length-1].distance;
+    const duration = vmParsedData[vmParsedData.length-1].time;
+    document.getElementById('vm-file-preview').innerHTML = `
+      <div style="background:var(--green-dim);border:1px solid var(--green);border-radius:var(--r);padding:10px 12px;font-size:11px;display:flex;gap:16px;flex-wrap:wrap">
+        <span style="color:var(--green)">✓ ${file.name}</span>
+        <span class="text-mono">${vmParsedData.length} nokta</span>
+        <span class="text-mono">Süre: ${duration.toFixed(2)}s</span>
+        <span class="text-mono">Maks Hız: ${maxSpeed.toFixed(3)} m/s</span>
+        <span class="text-mono">Mesafe: ${maxDist.toFixed(2)}m</span>
+      </div>`;
+  };
+  reader.readAsText(file);
+}
+
+function parseVMFile(text) {
+  const lines = text.replace(/
+/g,'').split('
+');
+  const data = [];
+  lines.forEach((line,i) => {
+    if (i===0) return; // header
+    const parts = line.split(';').map(p=>p.trim().replace(',','.'));
+    if (parts.length < 4) return;
+    const time=parseFloat(parts[0]), dist=parseFloat(parts[1]), speed=parseFloat(parts[2]), accel=parseFloat(parts[3]);
+    if (!isNaN(time)&&!isNaN(speed)) data.push({time,distance:dist||0,speed,acceleration:accel||0});
+  });
+  return data;
+}
+function clearVMFile() { vmParsedData=null; const el=document.getElementById('vm-file-preview'); if(el) el.innerHTML=''; }
+
+async function saveVMSession(athleteId) {
+  if (!vmParsedData) { notify('Önce dosya yükleyin!', 'error'); return; }
+  const date=document.getElementById('vm-date')?.value;
+  if (!date) { notify('Tarih seçin!', 'error'); return; }
+  const stroke=document.getElementById('vm-stroke')?.value;
+  const distance=document.getElementById('vm-distance')?.value;
+  const pool=document.getElementById('vm-pool')?.value;
+  const notes=document.getElementById('vm-notes')?.value.trim();
+  const { db, addDoc, collection, serverTimestamp } = window._fb;
+  const sessionData = { athleteId, module:'velocitymeter', date, stroke, distance, pool, notes,
+    data: JSON.stringify(vmParsedData), createdAt:serverTimestamp(), createdBy:currentProfile.id };
+  const ref = await addDoc(collection(db,'analyses'), sessionData);
+  if (!vmSessions[athleteId]) vmSessions[athleteId] = [];
+  vmSessions[athleteId].push({ id:ref.id, ...sessionData, data:vmParsedData });
+  clearVMFile();
+  notify('VelocityMeter seansı kaydedildi ✓', 'success');
+  renderVMSessionsList(athleteId);
+}
+async function loadVMSessions(athleteId) {
+  const { db, getDocs, collection, query, where } = window._fb;
+  const snap = await getDocs(query(collection(db,'analyses'), where('athleteId','==',athleteId), where('module','==','velocitymeter')));
+  vmSessions[athleteId] = [];
+  snap.forEach(d => {
+    const data = d.data();
+    vmSessions[athleteId].push({ id:d.id, ...data, data: typeof data.data==='string'?JSON.parse(data.data):data.data });
+  });
+}
+function renderVMSessionsList(athleteId) {
+  const cont = document.getElementById('vm-sessions-list'); if (!cont) return;
+  const sessions = (vmSessions[athleteId]||[]).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if (!sessions.length) { cont.innerHTML=`<div class="empty"><div class="empty-icon">⚡</div><p>Henüz VelocityMeter seansı yok.</p></div>`; return; }
+  cont.innerHTML = sessions.map(s => `<div class="session-card" onclick="openVMSession('${s.id}','${athleteId}')">
+    <div class="session-info">
+      <div class="s-title">⚡ ${s.stroke} ${s.distance} · ${s.pool}</div>
+      <div class="s-meta">${s.date} ${s.notes?'· '+s.notes:''}</div>
+    </div>
+    <div class="session-actions">
+      <button class="btn btn-sm btn-cyan" onclick="event.stopPropagation();openVMSession('${s.id}','${athleteId}')">Görüntüle</button>
+      <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();deleteSession('${s.id}','${athleteId}','velocitymeter')">Sil</button>
+    </div>
+  </div>`).join('');
+}
+function openVMSession(sessionId, athleteId) {
+  const session = vmSessions[athleteId]?.find(s=>s.id===sessionId); if (!session) return;
+  const data = session.data || [];
+  const maxSpeed = Math.max(...data.map(d=>d.speed));
+  const avgSpeed = data.filter(d=>d.speed>0.1).reduce((s,d)=>s+d.speed,0)/data.filter(d=>d.speed>0.1).length;
+  const maxDist = data[data.length-1]?.distance||0;
+  const duration = data[data.length-1]?.time||0;
+  document.getElementById('analysis-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="openModule('velocitymeter','${athleteId}')">← Geri</button>
+      <span style="font-size:14px;font-weight:700;color:var(--navy-700)">⚡ ${session.stroke} ${session.distance} · ${session.date}</span>
+      <span class="pill pill-teal">${session.pool}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
+      ${metricBox('Maks Hız', maxSpeed.toFixed(3)+' m/s', 'c-cyan')}
+      ${metricBox('Ort Hız', avgSpeed.toFixed(3)+' m/s', 'c-teal')}
+      ${metricBox('Mesafe', maxDist.toFixed(2)+'m', 'c-amber')}
+      ${metricBox('Süre', duration.toFixed(2)+'s', 'c-green')}
+    </div>
+    <div class="card"><div class="card-header"><h2>Hız Profili</h2><span class="text-muted text-sm">m/s — zaman ekseni</span></div>
+    <div class="card-body"><canvas id="vm-canvas" width="700" height="300"></canvas>
+    <div style="display:flex;gap:16px;margin-top:8px;font-size:11px">
+      <span style="color:var(--red)">● Hız (m/s)</span>
+    </div></div></div>`;
+  setTimeout(()=>drawVMChart(data), 50);
+}
+function drawVMChart(data) {
+  const canvas = document.getElementById('vm-canvas'); if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const maxV = Math.max(...data.map(d=>d.speed),0.1);
+  const step = (W-50)/data.length;
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=H-25-(i/4)*(H-45);ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(W-10,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='9px Inter';ctx.fillText((maxV*i/4).toFixed(2),0,y+3);}
+  ctx.strokeStyle='#ef4444';ctx.lineWidth=1.5;ctx.beginPath();
+  data.forEach((d,i)=>{const x=40+i*step,y=H-25-(d.speed/maxV)*(H-45);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  ctx.fillStyle='#94a3b8';ctx.font='9px Inter';
+  const tStep=Math.floor(data.length/6);
+  for(let i=0;i<data.length;i+=tStep){ctx.fillText(data[i].time.toFixed(1)+'s',40+i*step-8,H-8);}
+}
+
+// ════════════════════════════════════════════════════════
+// VIDEO ANALİZ MODULE
+// ════════════════════════════════════════════════════════
+
+let videoSessions = {};
+let editingVideoSession = null;
+
+async function renderVideoModule(athleteId, cont) {
+  await loadVideoSessions(athleteId);
+  cont.innerHTML = `
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>🎬 Video Analiz Seansları</h2>
+        <button class="btn btn-primary btn-sm" onclick="openVideoForm('${athleteId}')">+ Yeni Seans</button>
+      </div>
+    </div>
+    <div id="video-sessions-list"></div>`;
+  renderVideoSessionsList(athleteId);
+}
+
+function openVideoForm(athleteId, editId) {
+  editingVideoSession = editId || null;
+  const session = editId ? videoSessions[athleteId]?.find(s=>s.id===editId) : null;
+  document.getElementById('analysis-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button class="btn btn-ghost btn-sm" onclick="openModule('video','${athleteId}')">← Geri</button>
+      <span style="font-size:14px;font-weight:700;color:var(--navy-700)">${editId?'Video Seansını Düzenle':'Yeni Video Analiz Seansı'}</span>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h2>Seans Bilgileri</h2></div>
+      <div class="card-body">
+        <div style="margin-bottom:16px">${strokeDistanceSelector('vid','updateVideoSplits()')}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <div class="form-group"><label class="form-label">Tarih *</label><input type="date" class="form-input" id="vid-date" style="width:150px" value="${session?.date||new Date().toISOString().slice(0,10)}"></div>
+          <div class="form-group"><label class="form-label">Yarışma / Etkinlik</label><input class="form-input" id="vid-event" style="width:220px" placeholder="örn. Türkiye Şampiyonası 2025" value="${session?.event||''}"></div>
+        </div>
+        ${session?`<script>document.getElementById('vid-stroke').value='${session.stroke}';document.getElementById('vid-distance').value='${session.distance}';document.getElementById('vid-pool').value='${session.pool}';<\/script>`:''}
+      </div>
+    </div>
+    <div class="card mb-4" id="vid-splits-card">
+      <div class="card-header"><h2>Split Verileri</h2><span class="text-muted text-sm">Her 25m bölümü için</span></div>
+      <div class="card-body" id="vid-splits-container"></div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h2>Detaylı Yorum</h2></div>
+      <div class="card-body">
+        <textarea class="form-textarea" id="vid-comment" rows="8" placeholder="Biyomekanik analiz yorumu...">${session?.comment||''}</textarea>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button class="btn btn-ghost btn-sm" onclick="generateAIComment('video','${athleteId}')">🤖 AI Yorum Üret</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary btn-lg" onclick="saveVideoSession('${athleteId}')">💾 Kaydet</button>
+      <button class="btn btn-ghost" onclick="openModule('video','${athleteId}')">İptal</button>
+    </div>`;
+  if (session) {
+    setTimeout(()=>{
+      document.getElementById('vid-stroke').value=session.stroke||'Serbest';
+      document.getElementById('vid-distance').value=session.distance||'50m';
+      document.getElementById('vid-pool').value=session.pool||POOLS[0];
+      updateVideoSplits(session.splits);
+    },50);
+  } else {
+    setTimeout(()=>updateVideoSplits(), 50);
+  }
+}
+
+function updateVideoSplits(existingData) {
+  updateDistanceOptions('vid');
+  const stroke = document.getElementById('vid-stroke')?.value||'Serbest';
+  const distance = document.getElementById('vid-distance')?.value||'50m';
+  const splits = getSplits(stroke, distance);
+  const cont = document.getElementById('vid-splits-container'); if(!cont) return;
+  const params = ['Süre (sn)','Stroke Rate (str/min)','Stroke Count','Sualtı Süresi (sn)'];
+  let html = `<div style="overflow-x:auto"><table style="min-width:500px"><thead><tr>
+    <th>Parametre</th>${splits.map(s=>`<th>${s}</th>`).join('')}
+  </tr></thead><tbody>`;
+  params.forEach((param,pi) => {
+    html += `<tr><td style="font-weight:600;font-size:11px;white-space:nowrap">${param}</td>`;
+    splits.forEach((split,si) => {
+      const key = `p${pi}_s${si}`;
+      const val = existingData?.[key]||'';
+      html += `<td><input class="form-input text-mono" id="vid-${key}" value="${val}" placeholder="—" style="width:72px;text-align:center;padding:5px 6px"></td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  cont.innerHTML = html;
+}
+
+async function saveVideoSession(athleteId) {
+  const date=document.getElementById('vid-date')?.value;
+  if (!date) { notify('Tarih seçin!', 'error'); return; }
+  const stroke=document.getElementById('vid-stroke')?.value;
+  const distance=document.getElementById('vid-distance')?.value;
+  const pool=document.getElementById('vid-pool')?.value;
+  const event=document.getElementById('vid-event')?.value.trim();
+  const comment=document.getElementById('vid-comment')?.value.trim();
+  const splits = getSplits(stroke, distance);
+  const params = 4;
+  const splitData = {};
+  for(let pi=0;pi<params;pi++) splits.forEach((_,si)=>{
+    const el=document.getElementById(`vid-p${pi}_s${si}`);
+    if(el&&el.value) splitData[`p${pi}_s${si}`]=el.value;
+  });
+  const { db, doc, addDoc, setDoc, collection, serverTimestamp } = window._fb;
+  const sessionData = { athleteId, module:'video', date, stroke, distance, pool, event, comment, splits:splitData, createdAt:serverTimestamp(), createdBy:currentProfile.id };
+  if (editingVideoSession) {
+    await setDoc(doc(db,'analyses',editingVideoSession), {...sessionData, updatedAt:serverTimestamp()}, {merge:true});
+    const idx = videoSessions[athleteId]?.findIndex(s=>s.id===editingVideoSession);
+    if(idx>=0) videoSessions[athleteId][idx] = {...videoSessions[athleteId][idx],...sessionData};
+    notify('Seans güncellendi ✓', 'success');
+  } else {
+    const ref = await addDoc(collection(db,'analyses'), sessionData);
+    if(!videoSessions[athleteId]) videoSessions[athleteId]=[];
+    videoSessions[athleteId].push({id:ref.id,...sessionData});
+    notify('Video analiz seansı kaydedildi ✓', 'success');
+  }
+  openModule('video', athleteId);
+}
+
+async function loadVideoSessions(athleteId) {
+  const { db, getDocs, collection, query, where } = window._fb;
+  const snap = await getDocs(query(collection(db,'analyses'), where('athleteId','==',athleteId), where('module','==','video')));
+  videoSessions[athleteId]=[];
+  snap.forEach(d=>videoSessions[athleteId].push({id:d.id,...d.data()}));
+}
+function renderVideoSessionsList(athleteId) {
+  const cont=document.getElementById('video-sessions-list'); if(!cont) return;
+  const sessions=(videoSessions[athleteId]||[]).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(!sessions.length){cont.innerHTML=`<div class="empty"><div class="empty-icon">🎬</div><p>Henüz video analiz seansı yok.</p></div>`;return;}
+  cont.innerHTML=sessions.map(s=>`<div class="session-card">
+    <div class="session-info">
+      <div class="s-title">🎬 ${s.stroke} ${s.distance} · ${s.pool}</div>
+      <div class="s-meta">${s.date}${s.event?' · '+s.event:''}</div>
+      ${s.comment?`<div style="font-size:10px;color:var(--gray-400);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px">${s.comment.slice(0,80)}...</div>`:''}
+    </div>
+    <div class="session-actions">
+      <button class="btn btn-sm btn-ghost" onclick="openVideoForm('${athleteId}','${s.id}')">✏️</button>
+      <button class="btn btn-sm btn-danger" onclick="deleteSession('${s.id}','${athleteId}','video')">Sil</button>
+    </div>
+  </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// RACE ANALİZ MODULE
+// ════════════════════════════════════════════════════════
+
+let raceSessions = {};
+let editingRaceSession = null;
+
+async function renderRaceModule(athleteId, cont) {
+  await loadRaceSessions(athleteId);
+  cont.innerHTML = `
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>🏁 Yarış Analizi Seansları</h2>
+        <button class="btn btn-primary btn-sm" onclick="openRaceForm('${athleteId}')">+ Yeni Seans</button>
+      </div>
+    </div>
+    <div id="race-sessions-list"></div>`;
+  renderRaceSessionsList(athleteId);
+}
+
+function openRaceForm(athleteId, editId) {
+  editingRaceSession = editId || null;
+  const session = editId ? raceSessions[athleteId]?.find(s=>s.id===editId) : null;
+  document.getElementById('analysis-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button class="btn btn-ghost btn-sm" onclick="openModule('race','${athleteId}')">← Geri</button>
+      <span style="font-size:14px;font-weight:700;color:var(--navy-700)">${editId?'Yarış Seansını Düzenle':'Yeni Yarış Analizi Seansı'}</span>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h2>Seans Bilgileri</h2></div>
+      <div class="card-body">
+        <div style="margin-bottom:16px">${strokeDistanceSelector('race','updateRaceSplits()')}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <div class="form-group"><label class="form-label">Tarih *</label><input type="date" class="form-input" id="race-date" style="width:150px" value="${session?.date||new Date().toISOString().slice(0,10)}"></div>
+          <div class="form-group"><label class="form-label">Yarışma Adı</label><input class="form-input" id="race-event" style="width:240px" placeholder="örn. Türkiye Şampiyonası 2025" value="${session?.event||''}"></div>
+          <div class="form-group"><label class="form-label">Sıralama</label><input class="form-input" id="race-rank" style="width:80px" placeholder="1" type="number" value="${session?.rank||''}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h2>Split Verileri</h2><span class="text-muted text-sm">Her 25m bölümü için</span></div>
+      <div class="card-body" id="race-splits-container"></div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h2>Yorum</h2></div>
+      <div class="card-body">
+        <textarea class="form-textarea" id="race-comment" rows="6" placeholder="Yarış analiz yorumu...">${session?.comment||''}</textarea>
+        <div style="margin-top:8px"><button class="btn btn-ghost btn-sm" onclick="generateAIComment('race','${athleteId}')">🤖 AI Yorum Üret</button></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary btn-lg" onclick="saveRaceSession('${athleteId}')">💾 Kaydet</button>
+      <button class="btn btn-ghost" onclick="openModule('race','${athleteId}')">İptal</button>
+    </div>`;
+  if (session) {
+    setTimeout(()=>{
+      document.getElementById('race-stroke').value=session.stroke||'Serbest';
+      document.getElementById('race-distance').value=session.distance||'50m';
+      document.getElementById('race-pool').value=session.pool||POOLS[0];
+      updateRaceSplits(session.splits);
+    },50);
+  } else {
+    setTimeout(()=>updateRaceSplits(), 50);
+  }
+}
+
+function updateRaceSplits(existingData) {
+  updateDistanceOptions('race');
+  const stroke=document.getElementById('race-stroke')?.value||'Serbest';
+  const distance=document.getElementById('race-distance')?.value||'50m';
+  const splits=getSplits(stroke,distance);
+  const cont=document.getElementById('race-splits-container'); if(!cont) return;
+  const params=['Süre (sn)','Stroke Rate (str/min)','Stroke Count'];
+  let html=`<div style="overflow-x:auto"><table style="min-width:500px"><thead><tr>
+    <th>Parametre</th>${splits.map(s=>`<th>${s}</th>`).join('')}
+  </tr></thead><tbody>`;
+  params.forEach((param,pi)=>{
+    html+=`<tr><td style="font-weight:600;font-size:11px;white-space:nowrap">${param}</td>`;
+    splits.forEach((_,si)=>{
+      const key=`p${pi}_s${si}`, val=existingData?.[key]||'';
+      html+=`<td><input class="form-input text-mono" id="race-${key}" value="${val}" placeholder="—" style="width:72px;text-align:center;padding:5px 6px"></td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody></table></div>';
+  cont.innerHTML=html;
+}
+
+async function saveRaceSession(athleteId) {
+  const date=document.getElementById('race-date')?.value;
+  if(!date){notify('Tarih seçin!','error');return;}
+  const stroke=document.getElementById('race-stroke')?.value;
+  const distance=document.getElementById('race-distance')?.value;
+  const pool=document.getElementById('race-pool')?.value;
+  const event=document.getElementById('race-event')?.value.trim();
+  const rank=document.getElementById('race-rank')?.value;
+  const comment=document.getElementById('race-comment')?.value.trim();
+  const splits=getSplits(stroke,distance);
+  const splitData={};
+  for(let pi=0;pi<3;pi++) splits.forEach((_,si)=>{
+    const el=document.getElementById(`race-p${pi}_s${si}`);
+    if(el&&el.value) splitData[`p${pi}_s${si}`]=el.value;
+  });
+  const { db, doc, addDoc, setDoc, collection, serverTimestamp } = window._fb;
+  const sessionData={athleteId,module:'race',date,stroke,distance,pool,event,rank,comment,splits:splitData,createdAt:serverTimestamp(),createdBy:currentProfile.id};
+  if(editingRaceSession){
+    await setDoc(doc(db,'analyses',editingRaceSession),{...sessionData,updatedAt:serverTimestamp()},{merge:true});
+    const idx=raceSessions[athleteId]?.findIndex(s=>s.id===editingRaceSession);
+    if(idx>=0) raceSessions[athleteId][idx]={...raceSessions[athleteId][idx],...sessionData};
+    notify('Seans güncellendi ✓','success');
+  } else {
+    const ref=await addDoc(collection(db,'analyses'),sessionData);
+    if(!raceSessions[athleteId]) raceSessions[athleteId]=[];
+    raceSessions[athleteId].push({id:ref.id,...sessionData});
+    notify('Yarış analiz seansı kaydedildi ✓','success');
+  }
+  openModule('race',athleteId);
+}
+
+async function loadRaceSessions(athleteId) {
+  const { db, getDocs, collection, query, where } = window._fb;
+  const snap=await getDocs(query(collection(db,'analyses'),where('athleteId','==',athleteId),where('module','==','race')));
+  raceSessions[athleteId]=[];
+  snap.forEach(d=>raceSessions[athleteId].push({id:d.id,...d.data()}));
+}
+function renderRaceSessionsList(athleteId) {
+  const cont=document.getElementById('race-sessions-list'); if(!cont) return;
+  const sessions=(raceSessions[athleteId]||[]).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(!sessions.length){cont.innerHTML=`<div class="empty"><div class="empty-icon">🏁</div><p>Henüz yarış analizi yok.</p></div>`;return;}
+  cont.innerHTML=sessions.map(s=>`<div class="session-card">
+    <div class="session-info">
+      <div class="s-title">🏁 ${s.stroke} ${s.distance} · ${s.pool}</div>
+      <div class="s-meta">${s.date}${s.event?' · '+s.event:''}${s.rank?' · #'+s.rank:''}</div>
+    </div>
+    <div class="session-actions">
+      <button class="btn btn-sm btn-ghost" onclick="openRaceForm('${athleteId}','${s.id}')">✏️</button>
+      <button class="btn btn-sm btn-danger" onclick="deleteSession('${s.id}','${athleteId}','race')">Sil</button>
+    </div>
+  </div>`).join('');
+}
+
+// ── AI Comment ────────────────────────────────────────────
+async function generateAIComment(module, athleteId) {
+  notify('AI yorum üretiliyor...', 'info');
+  const ath = cache.athletes[athleteId];
+  let context = '';
+  if (module === 'video') {
+    const stroke=document.getElementById('vid-stroke')?.value;
+    const distance=document.getElementById('vid-distance')?.value;
+    context = `${ath?.name||'Sporcu'}, ${stroke} ${distance}. `;
+  } else if (module === 'race') {
+    const stroke=document.getElementById('race-stroke')?.value;
+    const distance=document.getElementById('race-distance')?.value;
+    context = `${ath?.name||'Sporcu'}, ${stroke} ${distance}. `;
+  }
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:800,
+        messages:[{role:'user',content:`Sen bir yüzme biyomekaniği uzmanısın. ${context}Bu sporcu için kısa ve teknik bir Türkçe analiz yorumu yaz (200-300 kelime). Genel teknik öneriler ver, kadans, kuvvet, faz zamanlaması gibi konulara değin.`}]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.[0]?.text||'';
+    const el = document.getElementById(module==='video'?'vid-comment':'race-comment');
+    if(el&&text) { el.value = text; notify('AI yorum üretildi ✓','success'); }
+  } catch(e) { notify('AI yorumu üretilemedi.','error'); }
+}
+
+// ── Delete session ────────────────────────────────────────
+async function deleteSession(sessionId, athleteId, module) {
+  if (!confirm('Bu seans silinecek. Emin misiniz?')) return;
+  const { db, doc, deleteDoc } = window._fb;
+  await deleteDoc(doc(db,'analyses',sessionId));
+  if(module==='swimbetter') sbSessions[athleteId]=sbSessions[athleteId]?.filter(s=>s.id!==sessionId);
+  else if(module==='velocitymeter') vmSessions[athleteId]=vmSessions[athleteId]?.filter(s=>s.id!==sessionId);
+  else if(module==='video') videoSessions[athleteId]=videoSessions[athleteId]?.filter(s=>s.id!==sessionId);
+  else if(module==='race') raceSessions[athleteId]=raceSessions[athleteId]?.filter(s=>s.id!==sessionId);
+  notify('Seans silindi','info');
+  openModule(module,athleteId);
+}
+
+// ── PROFILE ───────────────────────────────────────────────
+function renderProfile() {
+  const u = currentProfile;
+  const cont = document.getElementById('profile-content');
+  cont.innerHTML = `
+    <div style="max-width:540px">
+      <div class="card mb-4">
+        <div class="profile-cover"></div>
+        <div class="profile-av" onclick="triggerPhotoUpload()">
+          ${u.photoURL?`<img src="${u.photoURL}" alt="">`:`<span>${initials(u.name||'?')}</span>`}
+          <div class="av-overlay">📷</div>
+        </div>
+        <div style="padding:10px 20px 20px">
+          <div style="font-size:17px;font-weight:800;color:var(--navy-700)">${u.name||'—'}</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:2px">${u.title||''} ${u.email?'· '+u.email:''}</div>
+          <div style="margin-top:8px"><span class="role-badge role-${u.role==='superadmin'?'super':'coach'}">${roleLabel(u.role)}</span></div>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-header"><h2>Profil Bilgileri</h2></div>
+        <div class="card-body">
+          <div class="form-grid fg-2">
+            <div class="form-group span2"><label class="form-label">Ad Soyad</label><input class="form-input" id="prof-name" value="${u.name||''}"></div>
+            <div class="form-group"><label class="form-label">Unvan</label><input class="form-input" id="prof-title" value="${u.title||''}"></div>
+            <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" id="prof-phone" value="${u.phone||''}"></div>
+            <div class="form-group span2"><label class="form-label">E-posta (değiştirilemez)</label><input class="form-input" value="${u.email||''}" disabled></div>
+          </div>
+          <div style="margin-top:14px"><button class="btn btn-primary" onclick="saveProfile()">Kaydet</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>Şifre Değiştir</h2></div>
+        <div class="card-body">
+          <div class="form-grid fg-2">
+            <div class="form-group"><label class="form-label">Yeni Şifre</label><input class="form-input" type="password" id="prof-pw" placeholder="En az 8 karakter"></div>
+            <div class="form-group"><label class="form-label">Tekrar</label><input class="form-input" type="password" id="prof-pw2" placeholder="Aynı şifreyi girin"></div>
+          </div>
+          <div style="margin-top:14px"><button class="btn btn-primary" onclick="changePassword()">Şifreyi Güncelle</button></div>
+        </div>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="uploadPhoto(event)">
+    </div>`;
+}
+async function saveProfile() {
+  const name  = document.getElementById('prof-name').value.trim();
+  const title = document.getElementById('prof-title').value.trim();
+  const phone = document.getElementById('prof-phone').value.trim();
+  if (!name) { notify('Ad zorunlu!', 'error'); return; }
+  const { db, doc, setDoc, serverTimestamp } = window._fb;
+  await setDoc(doc(db,'users',currentProfile.id), {name,title,phone,updatedAt:serverTimestamp()}, {merge:true});
+  currentProfile.name = name; currentProfile.title = title; currentProfile.phone = phone;
+  document.getElementById('sb-name').textContent = name;
+  const av = document.getElementById('sb-avatar');
+  if (!currentProfile.photoURL) av.textContent = initials(name);
+  notify('Profil güncellendi ✓', 'success');
+  renderProfile();
+}
+async function changePassword() {
+  const pw  = document.getElementById('prof-pw').value;
+  const pw2 = document.getElementById('prof-pw2').value;
+  if (!pw) { notify('Şifre boş olamaz!', 'error'); return; }
+  if (pw !== pw2) { notify('Şifreler eşleşmiyor!', 'error'); return; }
+  if (pw.length < 8) { notify('En az 8 karakter!', 'error'); return; }
+  try {
+    const { updatePassword } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+    await updatePassword(window._fb.auth.currentUser, pw);
+    notify('Şifre güncellendi ✓', 'success');
+    document.getElementById('prof-pw').value = '';
+    document.getElementById('prof-pw2').value = '';
+  } catch(e) { notify('Hata: Tekrar giriş yapmanız gerekebilir.', 'error'); }
+}
+function triggerPhotoUpload() { document.getElementById('photo-input').click(); }
+async function uploadPhoto(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    const dataURL = ev.target.result;
+    const { db, doc, setDoc, serverTimestamp } = window._fb;
+    await setDoc(doc(db,'users',currentProfile.id), {photoURL:dataURL,updatedAt:serverTimestamp()}, {merge:true});
+    currentProfile.photoURL = dataURL;
+    const av = document.getElementById('sb-avatar');
+    av.innerHTML = `<img src="${dataURL}" alt="">`;
+    notify('Fotoğraf güncellendi ✓', 'success');
+    renderProfile();
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+}
+
+// ── CONFIRM DELETE ────────────────────────────────────────
+function confirmDelete(text, callback) {
+  document.getElementById('confirm-text').textContent = text;
+  document.getElementById('confirm-ok-btn').onclick = () => { closeModal('modal-confirm'); callback(); };
+  openModal('modal-confirm');
+}
+
+// ── EXPOSE ────────────────────────────────────────────────
+window.doLogin=doLogin; window.doLogout=doLogout;
+window.showView=showView; window.showAthleteDetail=showAthleteDetail;
+window.openModule=openModule; window.openModule=openModule;
+window.openClubModal=openClubModal; window.saveClub=saveClub; window.deleteClub=deleteClub;
+window.openCoachModal=openCoachModal; window.saveCoach=saveCoach; window.deleteCoach=deleteCoach;
+window.openAthleteModal=openAthleteModal; window.saveAthlete=saveAthlete; window.deleteAthlete=deleteAthlete;
+window.updateCoachSelect=updateCoachSelect; window.renderAthletes=renderAthletes;
+window.saveProfile=saveProfile; window.changePassword=changePassword;
+window.triggerPhotoUpload=triggerPhotoUpload; window.uploadPhoto=uploadPhoto;
+window.openModal=openModal; window.closeModal=closeModal; window.bgClose=bgClose;
+window.confirmDelete=confirmDelete;
+window.handleFileDrop=handleFileDrop; window.handleSBFileSelect=handleSBFileSelect;
+window.handleVMFileSelect=handleVMFileSelect;
+window.updateDistanceOptions=updateDistanceOptions;
+window.updateVideoSplits=updateVideoSplits; window.updateRaceSplits=updateRaceSplits;
+window.handleSBDrop=handleSBDrop; window.handleSBFiles=handleSBFiles;
+window.handleVMFile=handleVMFile; window.clearVMFile=clearVMFile;
+window.saveSBSession=saveSBSession; window.saveVMSession=saveVMSession;
+window.saveVideoSession=saveVideoSession; window.saveRaceSession=saveRaceSession;
+window.openSBSession=openSBSession; window.openVMSession=openVMSession;
+window.openVideoForm=openVideoForm; window.openRaceForm=openRaceForm;
+window.sbTab=sbTab; window.toggleStroke=toggleStroke;
+window.selectAllStrokes=selectAllStrokes; window.clearAllStrokes=clearAllStrokes;
+window.deleteSession=deleteSession; window.clearSBFiles=clearSBFiles;
+window.generateAIComment=generateAIComment;
+</script>
+</body>
+</html>
